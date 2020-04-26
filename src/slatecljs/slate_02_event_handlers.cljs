@@ -1,14 +1,11 @@
-(ns slatecljs.slate-00-walkthrough
+(ns slatecljs.slate-02-event-handlers
   (:require [clojure.string :as string]
             [react :as React :refer [useEffect useMemo useState]]
             [slate]))
-            ; :refer [createEditor]]
-  ;(:import [Slate]))
 
 (defn App
   "const App = () => {
   const editor = useMemo(() => withReact(createEditor()), [])
-  // Add the initial value when setting up our state.
   const [value, setValue] = useState([
     {
       type: 'paragraph',
@@ -18,7 +15,16 @@
 
   return (
     <Slate editor={editor} value={value} onChange={value => setValue(value)}>
-      <Editable />
+      <Editable
+        onKeyDown={event => {
+          if (event.key === '&') {
+            // Prevent the ampersand character from being inserted.
+            event.preventDefault()
+            // Execute the `insertText` method when the event occurs.
+            editor.insertText('and')
+          }
+        }}
+      />
     </Slate>
   )
 }"
@@ -31,7 +37,15 @@
       #js {:editor editor
            :value value
            :onChange #(setValue %)}
-      (React.createElement js/Editable #js{}))))
+      (React.createElement js/Editable
+        #js{:onKeyDown
+            (fn onKeyDown [event]
+              ; (js/console.log (.-key event)
+              (when (= (.-key event) "&")
+                ; Prevent the ampersand character from being inserted.
+                (.preventDefault event) 
+                ; Execute the `insertText` method when the event occurs.
+                (.insertText editor "and")))}))))
 
 (defn -main 
   []
@@ -40,5 +54,3 @@
         (js/React.createElement App
           #js {})
         app-host-element)))
-
-(-main)

@@ -1,2 +1,2 @@
 ^{:npm {:bundles {"dist/index.bundle.js" "src/js/index.js"}}}
-{:main slatecljs.slate-walkthroughs}
+{:main slatecljs.slate-01-installing-slate}
