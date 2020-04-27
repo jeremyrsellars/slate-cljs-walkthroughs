@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      #app #editor-parent>* {
-        background: #eee;
-        border: 1px solid #888;
-        border-radius: 3px;
-        padding: 5px;
-      }
-      #app #editor-parent>* pre {
-        background: #aaa;
-        border-radius: 3px;
-      }
-    </style>
+    <link rel="stylesheet"
+          href="css/style.css">
   </head>
   <body>
-    <div id="app"></div>
+    <h1 class="title">Slate with ClojureScript</h1>
+    <div id="app">
+      <h1>Loading...</h1>
+    </div>
     <script src="cljs-out/dev-main.js"></script>
     <link rel="stylesheet"
           href="highlightjs/styles/default.css">
     <link rel="stylesheet"
-          href="highlightjs/styles/agate.css">
+          href="highlightjs/styles/tomorrow-night-blue.css">
     <script src="highlightjs/highlight.pack.js"></script>
     <script>
       function highlightNow(force) {
@@ -30,16 +23,10 @@
             ? '#source pre code'
             : '#source pre code:not(.hljs)'
        document.querySelectorAll(selector).forEach((block) => {
-         console.log("highlighting.  Force", force)
          hljs.highlightBlock(block);
        })
       }
       setInterval(highlightNow, 1000)
     </script>
-    <style type="text/css">
-      .language-clojure.hljs .hljs-title>.hljs-string {
-        display: none;
-      }
-    </style>
   </body>
 </html>

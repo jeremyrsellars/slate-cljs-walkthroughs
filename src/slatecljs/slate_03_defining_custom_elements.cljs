@@ -2,7 +2,7 @@
   (:require [clojure.string :as string]
             cljs.repl
             [react :as React :refer [useEffect useMemo useState useCallback]]
-            slatecljs.common))
+            [slatecljs.common :as common]))
 
 (defn CodeElement
   "// Define a React component renderer for our code blocks.
@@ -68,19 +68,22 @@ const CodeElement = props => {
     </Slate>
   )
 }"
- []
- (let [editor (useMemo #(js/withReact (js/createEditor))
-                       #js [])
-       ; Add the initial value when setting up our state.
-       [value setValue] (useState #js[#js {:type "paragraph"
-                                           :children #js [#js {:text "A line of text in a paragraph."}]}])
-       renderElement
-        (useCallback
-          (fn renderElement [props]
-            (case (.-type (.-element props))
-              "code" (React.createElement CodeElement props)
-                     (React.createElement DefaultElement props)))
-          #js [])]
+  []
+  (let [editor (useMemo #(js/withReact (js/createEditor))
+                        #js [])
+        ; Add the initial value when setting up our state.
+        [value setValue]
+        (useState
+         #js [#js {:type "paragraph"
+                   :children
+                   #js [#js {:text "A line of text in a paragraph."}]}])
+        renderElement
+         (useCallback
+           (fn renderElement [props]
+             (case (.-type (.-element props))
+               "code" (React.createElement CodeElement props)
+                      (React.createElement DefaultElement props)))
+           #js [])]
     
     (React.createElement js/Slate
       #js {:editor editor
@@ -106,9 +109,27 @@ const CodeElement = props => {
                     #js { :type (if match "paragraph" "code")}
                     #js { :match (fn [n] (js/Editor.isBlock editor n))}))))}))))
 
-(defn -main 
-  []
-  (slatecljs.common/render-demo
-    App
-    (with-out-str (cljs.repl/source App))
-    (with-out-str (cljs.repl/doc App))))
+(let [anchor "w03"
+      title "03 Defining custom elements"]
+  (defn ^:export -main
+    []
+    (slatecljs.common/render-demo
+      App
+      {:title title
+       :description "Press Ctrl+` to toggle code section for the line you're editing."
+       :cljs-source (with-out-str (cljs.repl/source App))
+       :js-source (with-out-str (cljs.repl/doc App))
+       :navigation [(let [anchor "w04"]
+                      {:text (common/title anchor)
+                       :url (str "#" anchor)
+                       :class "next"})
+                    {:text title
+                     :url "https://docs.slatejs.org/walkthroughs/03-defining-custom-elements"
+                     :class "slate-tutorial"}
+                    (let [anchor "w02"]
+                      {:text (common/title anchor)
+                       :url (str "#" anchor)
+                       :class "previous"})]}))
+
+  (defmethod common/app-component anchor [_] -main)
+  (defmethod common/title anchor [_] title))

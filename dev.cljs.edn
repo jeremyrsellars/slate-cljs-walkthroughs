@@ -1,2 +1,3 @@
-^{:npm {:bundles {"dist/index.bundle.js" "src/js/index.js"}}}
+^{:npm {:bundles {"dist/index.bundle.js" "src/js/index.js"}}
+  :css-dirs ["resources/public/css"]}
 {:main slatecljs.slate-walkthroughs}

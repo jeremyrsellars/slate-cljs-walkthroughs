@@ -1,7 +1,7 @@
 (ns slatecljs.slate-02-event-handlers
   (:require [clojure.string :as string]
             [react :as React :refer [useEffect useMemo useState]]
-            slatecljs.common))
+            [slatecljs.common :as common]))
 
 (defn App
   "const App = () => {
@@ -28,12 +28,15 @@
     </Slate>
   )
 }"
- []
- (let [editor (useMemo #(js/withReact (js/createEditor))
+  []
+  (let [editor (useMemo #(js/withReact (js/createEditor))
                        #js [])
-       ; Add the initial value when setting up our state.
-       [value setValue] (useState #js[#js {:type "paragraph"
-                                           :children #js [#js {:text "A line of text in a paragraph."}]}])]
+        ; Add the initial value when setting up our state.
+        [value setValue]
+        (useState
+         #js [#js {:type "paragraph"
+                   :children
+                   #js [#js {:text "A line of text in a paragraph."}]}])]
     (React.createElement js/Slate
       #js {:editor editor
            :value value
@@ -48,9 +51,27 @@
                 ; Execute the `insertText` method when the event occurs.
                 (.insertText editor "and")))}))))
 
-(defn -main 
-  []
-  (slatecljs.common/render-demo
-    App
-    (with-out-str (cljs.repl/source App))
-    (with-out-str (cljs.repl/doc App))))
+(let [anchor "w02"
+      title "02 Event handlers"]
+  (defn ^:export -main
+    []
+    (slatecljs.common/render-demo
+      App
+      {:title title
+       :description "Automatically replace '&' with 'and' when you type it."
+       :cljs-source (with-out-str (cljs.repl/source App))
+       :js-source (with-out-str (cljs.repl/doc App))
+       :navigation [(let [anchor "w03"]
+                      {:text (common/title anchor)
+                       :url (str "#" anchor)
+                       :class "next"})
+                    {:text title
+                     :url "https://docs.slatejs.org/walkthroughs/02-adding-event-handlers"
+                     :class "slate-tutorial"}
+                    (let [anchor "w01"]
+                      {:text (common/title anchor)
+                       :url (str "#" anchor)
+                       :class "previous"})]}))
+
+  (defmethod common/app-component anchor [_] -main)
+  (defmethod common/title anchor [_] title))
