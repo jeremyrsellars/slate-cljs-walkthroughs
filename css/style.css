@@ -1,0 +1,61 @@
+body {
+  padding: 1em;
+}
+
+#app #editor-parent>* {
+  background: #eee;
+  border: 1px solid #888;
+  border-radius: 3px;
+  padding: 5px;
+}
+#app #editor-parent>* pre {
+  background: #aaa;
+  border-radius: 3px;
+}
+
+#app pre {
+  border: 1px solid #000;
+  border-radius: 3px;
+  background-color: #002451; /*tomorrow-night-blue.css*/
+  color: white;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: "arial black", sans-serif;
+  font-weight: 400;
+}
+
+h1.title {
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 3em;
+  margin-top: 0;
+}
+
+#nav li.slate-tutorial::before {
+  content: "Follow along with ";
+}
+#nav li.slate-tutorial::after {
+  content: " in the Slate Tutorial: ";
+}
+
+#nav li.next::before {
+  content: "Next: ";
+}
+
+#nav li.previous::before {
+  content: "Previous: ";
+}
+
+#nav li.source-link::before {
+  content: "Clojure for ";
+}
+#nav li.source-link::after {
+  content: " on GitHub";
+}
+
+p.description::before {
+  content: "Try it!";
+  padding-right: 1em;
+  font-weight: 600;
+}
