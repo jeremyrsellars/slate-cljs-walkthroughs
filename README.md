@@ -11,4 +11,11 @@ The ClojureScript launcher and code reloading is roughly based on the [Figwheel.
 
 ### Usage
 
-clojure -m figwheel.main -b dev -r
+    clojure -m figwheel.main -b dev -r
+
+
+### Webpack?
+
+After editing [src/js/index.js](src/js/index.js), you'll need to run webpack again. See [here](https://figwheel.org/docs/npm.html#create-the-indexjs-file).
+
+    npx webpack

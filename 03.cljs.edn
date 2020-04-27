@@ -1,0 +1,2 @@
+^{:npm {:bundles {"dist/index.bundle.js" "src/js/index.js"}}}
+{:main slatecljs.slate-03-defining-custom-elements}

@@ -1,10 +1,8 @@
 (ns slatecljs.slate-03-defining-custom-elements
   (:require [clojure.string :as string]
+            cljs.repl
             [react :as React :refer [useEffect useMemo useState useCallback]]
-            [slate :refer [Editor Transforms]]))
-
-(js/console.log "e" Editor)
-(js/console.log "t" Transforms)
+            slatecljs.common))
 
 (defn CodeElement
   "// Define a React component renderer for our code blocks.
@@ -71,16 +69,18 @@ const CodeElement = props => {
   )
 }"
  []
- (let [editor (useMemo #(js/withReact (js/createEditor)))
+ (let [editor (useMemo #(js/withReact (js/createEditor))
+                       #js [])
        ; Add the initial value when setting up our state.
-       [value setValue] (useState #js[#js {:type 'paragraph'
+       [value setValue] (useState #js[#js {:type "paragraph"
                                            :children #js [#js {:text "A line of text in a paragraph."}]}])
        renderElement
         (useCallback
           (fn renderElement [props]
             (case (.-type (.-element props))
               "code" (React.createElement CodeElement props)
-                     (React.createElement DefaultElement props))))]
+                     (React.createElement DefaultElement props)))
+          #js [])]
     
     (React.createElement js/Slate
       #js {:editor editor
@@ -89,24 +89,26 @@ const CodeElement = props => {
       (React.createElement js/Editable
         #js{:renderElement renderElement
             :onKeyDown
-            (fn onKeyDown [event]
-              (js/console.log event)
+            (fn onKeyDown [event & xs]
               (when (and (= (.-key event) "`") (.-ctrlKey event))
-                (js/console.log "Toggling code block")
                 (.preventDefault event)
                 ; Determine whether any of the currently selected blocks are code blocks.
-                (let [[match] (Editor.nodes editor #js {:match (fn [n] (= (.-type n) "code"))})]
+                (let [[match] 
+                      (es6-iterator-seq
+                        (.nodes js/Editor editor
+                                  #js {:match
+                                       (fn [n]
+                                          (= (.-type n) "code"))}))]
+
                   ; Toggle the block type depending on whether there's already a match.
-                  (.setNodes Transforms 
+                  (.setNodes js/Transforms
                     editor
                     #js { :type (if match "paragraph" "code")}
-                    #js { :match (fn [n] (Editor.isBlock editor n))}))))}))))
-
+                    #js { :match (fn [n] (js/Editor.isBlock editor n))}))))}))))
 
 (defn -main 
   []
-  (let [app-host-element (js/document.getElementById "app")]
-    (js/ReactDOM.render
-        (js/React.createElement App
-          #js {})
-        app-host-element)))
+  (slatecljs.common/render-demo
+    App
+    (with-out-str (cljs.repl/source App))
+    (with-out-str (cljs.repl/doc App))))

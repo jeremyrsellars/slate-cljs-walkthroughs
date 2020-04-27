@@ -1,9 +1,7 @@
 (ns slatecljs.slate-01-installing-slate
   (:require [clojure.string :as string]
             [react :as React :refer [useEffect useMemo useState]]
-            [slate]))
-            ; :refer [createEditor]]
-  ;(:import [Slate]))
+            slatecljs.common))
 
 (defn App
   "const App = () => {
@@ -23,9 +21,10 @@
   )
 }"
  []
- (let [editor (useMemo #(js/withReact (js/createEditor)))
+ (let [editor (useMemo #(js/withReact (js/createEditor))
+                       #js [])
        ; Add the initial value when setting up our state.
-       [value setValue] (useState #js[#js {:type 'paragraph'
+       [value setValue] (useState #js[#js {:type "paragraph"
                                            :children #js [#js {:text "A line of text in a paragraph."}]}])]
     (React.createElement js/Slate
       #js {:editor editor
@@ -35,8 +34,7 @@
 
 (defn -main 
   []
-  (let [app-host-element (js/document.getElementById "app")]
-    (js/ReactDOM.render
-        (js/React.createElement App
-          #js {})
-        app-host-element)))
+  (slatecljs.common/render-demo
+    App
+    (with-out-str (cljs.repl/source App))
+    (with-out-str (cljs.repl/doc App))))
