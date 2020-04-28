@@ -2,11 +2,12 @@
   (:require [clojure.string :as string]
             [slatecljs.browser :as browser]
             [slatecljs.common :as common]
-            [slatecljs.slate-01-installing-slate                      :as w01]
-            [slatecljs.slate-02-event-handlers                        :as w02]
-            [slatecljs.slate-03-defining-custom-elements              :as w03]))
+            slatecljs.slate-01-installing-slate
+            slatecljs.slate-02-event-handlers
+            slatecljs.slate-03-defining-custom-elements
+            slatecljs.slate-04-applying-custom-formatting))
 
-(def -main w03/-main)
+(def -main slatecljs.slate-01-installing-slate/-main)
 (defmethod common/app-component "" [_] -main)
 
 

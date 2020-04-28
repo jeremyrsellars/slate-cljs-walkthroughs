@@ -1,7 +1,11 @@
 (ns slatecljs.slate-02-event-handlers
-  (:require [clojure.string :as string]
+  (:require cljs.repl
+            [clojure.string :as string]
             [react :as React :refer [useEffect useMemo useState]]
-            [slatecljs.common :as common]))
+            [slatecljs.common :as common])
+  (:require-macros [slatecljs.github :refer [source-bookmark]]))
+
+(def bookmark (source-bookmark "src"))
 
 (defn App
   "const App = () => {
@@ -68,6 +72,9 @@
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/02-adding-event-handlers"
                      :class "slate-tutorial"}
+                    {:text "<App>"
+                     :url bookmark
+                     :class "source-link"}
                     (let [anchor "w01"]
                       {:text (common/title anchor)
                        :url (str "#" anchor)

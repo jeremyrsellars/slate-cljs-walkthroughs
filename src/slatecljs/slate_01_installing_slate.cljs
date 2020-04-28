@@ -1,7 +1,11 @@
 (ns slatecljs.slate-01-installing-slate
-  (:require [clojure.string :as string]
+  (:require cljs.repl
+            [clojure.string :as string]
             [react :as React :refer [useEffect useMemo useState]]
-            [slatecljs.common :as common]))
+            [slatecljs.common :as common])
+  (:require-macros [slatecljs.github :refer [source-bookmark]]))
+
+(def bookmark (source-bookmark "src"))
 
 (defn App
   "const App = () => {
@@ -49,6 +53,9 @@
                       {:text (common/title anchor)
                        :url (str "#" anchor)
                        :class "next"})
+                    {:text "<App>"
+                     :url bookmark
+                     :class "source-link"}
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/01-installing-slate"
                      :class "slate-tutorial"}]}))

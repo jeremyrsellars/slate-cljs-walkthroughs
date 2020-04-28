@@ -3,3 +3,4 @@
 dist/index.bundle.js
 node_modules/*
 target/public/*
+*.sublime-workspace

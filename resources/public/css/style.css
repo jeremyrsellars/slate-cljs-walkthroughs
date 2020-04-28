@@ -33,7 +33,10 @@ h1.title {
 }
 
 #nav li.slate-tutorial::before {
-  content: "Follow along with Slate Tutorial: ";
+  content: "Follow along with ";
+}
+#nav li.slate-tutorial::after {
+  content: " in the Slate Tutorial: ";
 }
 
 #nav li.next::before {
@@ -44,11 +47,15 @@ h1.title {
   content: "Previous: ";
 }
 
+#nav li.source-link::before {
+  content: "Clojure for ";
+}
+#nav li.source-link::after {
+  content: " on GitHub";
+}
+
 p.description::before {
   content: "Try it!";
   padding-right: 1em;
   font-weight: 600;
-}
-p.description {
-  
 }
