@@ -46,6 +46,7 @@
     (slatecljs.common/render-demo
       App
       {:title title
+       :objective "Get started by showing a editable Slate."
        :description "Type some text"
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))

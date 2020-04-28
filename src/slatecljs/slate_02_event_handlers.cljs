@@ -62,6 +62,7 @@
     (slatecljs.common/render-demo
       App
       {:title title
+       :objective "Use an event handler to implement custom behavior."
        :description "Automatically replace '&' with 'and' when you type it."
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))

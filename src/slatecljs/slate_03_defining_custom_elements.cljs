@@ -125,6 +125,7 @@ const CodeElement = props => {
     (slatecljs.common/render-demo
       App
       {:title title
+       :objective "Use an event handler to set a text block to a custom element, and then back again."
        :description "Press Ctrl+` to toggle code section for the line you're editing."
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))

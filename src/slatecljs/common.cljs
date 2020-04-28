@@ -26,12 +26,26 @@
     (js/setTimeout highlight-source 1000)))
 
 (defn render-demo
-  [App {:keys [title description cljs-source js-source navigation]}]
+  [App {:keys [title objective description cljs-source js-source navigation]}]
   (let [app-host-element (js/document.getElementById "app")]
     (gobj/set js/document "title" (str title " - Slate with ClojureScript"))
     (js/ReactDOM.render
       (js/React.createElement "div" #js {}
         (js/React.createElement "h1" #js {} title)
+        (js/React.createElement "p" #js {:class "objective"}
+          objective
+          (into-array
+            (for [{:keys [text url class]} navigation
+                  :when (= class "slate-tutorial")]
+              (js/React.createElement "span" #js {}
+               #js [(js/React.createElement "br" #js {})
+                    "  Follow along with "
+                    (js/React.createElement "a"
+                      #js {:href url, :class class
+                           :target "tutorial"}
+                      (str "Slate tutorial " text))
+                    "."]))))
+
 
         (js/React.createElement "h3" #js {} "Slate editor")
         (js/React.createElement "p" #js {:class "description"}
