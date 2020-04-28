@@ -14,7 +14,6 @@
 (defn load-section [hash]
   (let [k (string/replace hash #"^#" "")
         component-fn (common/app-component k)]
-    (println k hash :component-fn component-fn)
     (component-fn)))
 
 (defn- on-navigate [event]

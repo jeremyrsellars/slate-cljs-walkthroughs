@@ -101,7 +101,7 @@ const CodeElement = props => {
       (React.createElement js/Editable
         #js{:renderElement renderElement
             :onKeyDown
-            (fn onKeyDown [event & xs]
+            (fn onKeyDown [event]
               (when (and (= (.-key event) "`") (.-ctrlKey event))
                 (.preventDefault event)
                 ; Determine whether any of the currently selected blocks are code blocks.
