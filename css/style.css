@@ -11,6 +11,7 @@ body {
 #app #editor-parent>* pre {
   background: #aaa;
   border-radius: 3px;
+  padding: 6px;
 }
 
 #app pre {
@@ -54,8 +55,14 @@ h1.title {
   content: " on GitHub";
 }
 
+p.objective::before {
+  content: "Objective:";
+  padding-right: 1em;
+  font-weight: 600;
+}
+
 p.description::before {
-  content: "Try it!";
+  content: "Try the finished product!";
   padding-right: 1em;
   font-weight: 600;
 }
