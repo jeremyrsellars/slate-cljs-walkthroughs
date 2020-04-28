@@ -43,11 +43,13 @@ const CodeElement = props => {
     </span>
   )
 }"
-  [{:strs [bold] :as props}]
-  (React.createElement "span"
-    (doto (gobj/clone (.-attributes props))
-      (gobj/set "style" #js {:font-weight (if bold "bold" "normal")}))
-    (.-children props)))
+  [props]
+  (let [leaf (gobj/get props "leaf")
+        bold (gobj/get leaf "bold")]
+    (React.createElement "span"
+      (doto (gobj/clone (.-attributes props))
+        (gobj/set "style" #js {:font-weight (if bold "bold" "normal")}))
+      (.-children props))))
 
 (def app-bookmark (source-bookmark "src"))
 
@@ -119,7 +121,6 @@ const CodeElement = props => {
   []
   (let [editor (useMemo #(js/withReact (js/createEditor))
                         #js [])
-        ; Add the initial value when setting up our state.
         [value setValue]
         (useState
          #js [#js {:type "paragraph"
@@ -132,6 +133,7 @@ const CodeElement = props => {
                "code" (React.createElement CodeElement props)
                       (React.createElement DefaultElement props)))
            #js [])
+        ; Define a leaf rendering function that is memoized with `useCallback`.
         renderLeaf
          (useCallback
            (fn renderLeaf [props]
@@ -147,13 +149,12 @@ const CodeElement = props => {
             ; Pass in the `renderLeaf` function.
             :renderLeaf renderLeaf
             :onKeyDown
-            (fn onKeyDown [event & xs]
+            (fn onKeyDown [event]
              (when (.-ctrlKey event)
               (case (.-key event)  
                "`"
                (do
                 (.preventDefault event)
-                ; Determine whether any of the currently selected blocks are code blocks.
                 (let [[match] 
                       (es6-iterator-seq
                         (.nodes js/Editor editor
@@ -170,20 +171,11 @@ const CodeElement = props => {
                "b"
                (do
                 (.preventDefault event)
-                ; Determine whether any of the currently selected blocks are code blocks.
-                (let [[match] 
-                      (es6-iterator-seq
-                        (.nodes js/Editor editor
-                                  #js {:match
-                                       (fn [n]
-                                          (= (.-type n) "code"))}))]
-
-                  ; Toggle the block type depending on whether there's already a match.
-                  (.setNodes js/Transforms
-                    editor
-                    #js { :bold true}
-                    #js { :match (fn [n] (js/slate.Text.isText n))
-                          :split true})))
+                (.setNodes js/Transforms
+                  editor
+                  #js { :bold true}
+                  #js { :match (fn [n] (js/Text.isText n))
+                        :split true}))
                
                ;default
                nil)))}))))
@@ -198,7 +190,8 @@ const CodeElement = props => {
        :description "Press Ctrl+b to toggle bold."
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
-       :navigation [(let [anchor "w05"]
+       :navigation [#_
+                    (let [anchor "w05"]
                       {:text (common/title anchor)
                        :url (str "#" anchor)
                        :class "next"})
