@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Slate with ClojureScript</title>
     <link rel="stylesheet"
           href="css/style.css">
   </head>
@@ -15,18 +16,5 @@
     <link rel="stylesheet"
           href="highlightjs/styles/tomorrow-night-blue.css">
     <script src="highlightjs/highlight.pack.js"></script>
-    <script>
-      function highlightNow(force) {
-        force = !!force
-        const selector = 
-          force
-            ? '#source pre code'
-            : '#source pre code:not(.hljs)'
-       document.querySelectorAll(selector).forEach((block) => {
-         hljs.highlightBlock(block);
-       })
-      }
-      setInterval(highlightNow, 1000)
-    </script>
   </body>
 </html>
