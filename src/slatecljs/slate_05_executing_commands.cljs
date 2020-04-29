@@ -263,12 +263,11 @@ const CodeElement = props => {
     (slatecljs.common/render-demo
       App
       {:title title
-       :objective "Use an event handler to format a span of text span using a custom leaf node.  Toggling back again is an excercise for the reader, but you can check out Walkthrough #3 for ideas."
+       :objective "Make reusable formatting commands to help keep code clear and maintainable."
        :description "Select some text and try the buttons, Ctrl+b, ctrl-` as before."
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
-       :navigation [#_
-                    (let [anchor "w06"]
+       :navigation [(let [anchor "w06"]
                       {:text (common/title anchor)
                        :url (str "#" anchor)
                        :class "next"})

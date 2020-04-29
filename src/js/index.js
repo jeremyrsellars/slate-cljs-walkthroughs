@@ -5,10 +5,11 @@ window.React = React;
 window.ReactDOM = ReactDOM;
 
 // Import the Slate editor factory.
-import { createEditor, Editor, Transforms, Text } from 'slate'
+import { createEditor, Editor, Node, Transforms, Text } from 'slate'
 window.slate = {
 	createEditor: createEditor,
 	Editor: Editor,
+	Node: Node,
 	Transforms: Transforms,
 	Text: Text,
 }
