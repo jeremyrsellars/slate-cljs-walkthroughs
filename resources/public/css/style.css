@@ -1,5 +1,6 @@
 body {
   padding: 1em;
+  font-family: sans-serif;
 }
 
 #app #editor-parent>* {

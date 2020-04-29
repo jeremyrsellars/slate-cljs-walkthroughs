@@ -39,6 +39,33 @@
            :onChange #(setValue %)}
       (React.createElement js/Editable #js{}))))
 
+(defn About
+  []
+  (React.createElement "div" #js {}
+    (React.createElement "p" #js {}
+      "You may want to take a look at these files for more on getting Slate, React, NPM, WebPack, and ClojureScript working together."
+      (React.createElement "ul" #js {} 
+        (React.createElement "li" #js {}
+          "NPM"
+          (React.createElement "ul" #js {}
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/package.json"} "package.json"))))
+
+        (React.createElement "li" #js {}
+          "WebPack"
+          (React.createElement "ul" #js {}
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/webpack.config.js"} "webpack.config.js"))
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/src/js/index.js"} "src/js/index.js"))))
+
+        (React.createElement "li" #js {} 
+          "Figwheel and ClojureScript"
+          (React.createElement "ul" #js {}
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/deps.edn"} "deps.edn"))
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/dev.cljs.edn"} "dev.cljs.edn"))
+            (React.createElement "li" #js {} "Along with the " (React.createElement "a" #js {:href "https://figwheel.org/docs/npm.html" :rel "nofollow"} "Figwheel.main NPM Modules tutorial"))))))))
+
+
+
+
 (let [anchor "w01"
       title "01 Installing slate"]
   (defn ^:export -main
@@ -46,6 +73,7 @@
     (slatecljs.common/render-demo
       App
       {:title title
+       :about (About)
        :objective "Get started by showing a editable Slate."
        :description "Type some text"
        :cljs-source (with-out-str (cljs.repl/source App))

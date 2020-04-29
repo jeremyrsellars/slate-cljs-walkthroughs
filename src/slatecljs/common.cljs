@@ -26,12 +26,14 @@
     (js/setTimeout highlight-source 1000)))
 
 (defn render-demo
-  [App {:keys [title objective description cljs-source js-source navigation]}]
+  [App {:keys [title about objective description cljs-source js-source navigation]}]
   (let [app-host-element (js/document.getElementById "app")]
     (gobj/set js/document "title" (str title " - Slate with ClojureScript"))
     (js/ReactDOM.render
       (js/React.createElement "div" #js {}
         (js/React.createElement "h1" #js {} title)
+        (when about
+          (js/React.createElement "p" #js {:class "about"} about))
         (js/React.createElement "p" #js {:class "objective"}
           objective
           (into-array
@@ -44,29 +46,37 @@
                       #js {:href url, :class class
                            :target "tutorial"}
                       (str "Slate tutorial " text))
-                    "."]))))
+                    " (JavaScript)."]))))
 
 
-        (js/React.createElement "h3" #js {} "Slate editor")
-        (js/React.createElement "p" #js {:class "description"}
-          description)
-        (js/React.createElement "div" #js {:id "editor-parent"}
-          (js/React.createElement App
-            #js {}))
+        (when App
+          (js/React.createElement "h3" #js {} "Slate editor"))
+        (when description
+          (js/React.createElement "p" #js {:class "description"}
+            description))
+        (when App
+          (js/React.createElement "div" #js {:id "editor-parent"}
+            (js/React.createElement App
+              #js {})))
 
-        (js/React.createElement "div" #js {:id "source"}
-          (js/React.createElement "h3" #js {} "ClojureScript")
-          (js/React.createElement "pre" #js {}
-            (js/React.createElement "code" #js {:class "language-clojure"
-                                                :key (str "cljs:" title)}
-              (string/replace-first cljs-source
-                #"\"(?:\\\"|[^\"])*\"\s*" "")))
-          (js/React.createElement "h3" #js {} "JavaScript (from Slate Tutorial)")
-          (js/React.createElement "pre" #js {}
-            (js/React.createElement "code" #js {:class "language-javascript"
-                                                :key (str "js:" title)}
-              (string/replace js-source
-                #"^-----*\r?\n(.*)\r?\n(.*)" "  //From $1 $2"))))
+        (when (or cljs-source js-source)
+         (js/React.createElement "div" #js {:id "source"}
+          (when cljs-source
+            (js/React.createElement "h3" #js {} "ClojureScript"))
+          (when cljs-source
+            (js/React.createElement "pre" #js {}
+              (js/React.createElement "code" #js {:class "language-clojure"
+                                                  :key (str "cljs:" title)}
+                (string/replace-first cljs-source
+                  #"\"(?:\\\"|[^\"])*\"\s*" ""))))
+          (when js-source
+            (js/React.createElement "h3" #js {} "JavaScript (from Slate Tutorial)"))
+          (when js-source
+            (js/React.createElement "pre" #js {}
+              (js/React.createElement "code" #js {:class "language-javascript"
+                                                  :key (str "js:" title)}
+                (string/replace js-source
+                  #"^-----*\r?\n(.*)\r?\n(.*)" "  //From $1 $2"))))))
 
         (js/React.createElement "h3" #js {} "Where to next?")
         (js/React.createElement "ul" #js {:id "nav"}
