@@ -1,4 +1,4 @@
-(ns slatecljs.slate-04-applying-custom-formatting
+(ns slatecljs.slate-05-executing-commands
   (:require cljs.repl
             [clojure.string :as string]
             [goog.object :as gobj]
@@ -51,6 +51,80 @@ const CodeElement = props => {
         (gobj/set "style" #js {:font-weight (if bold "bold" "normal")}))
       (.-children props))))
 
+(def CustomEditor-bookmark (source-bookmark "src"))
+; For ClojureScript, the CustomEditor object is a bit redundant since
+; ClojureScript offers namespaces.  Instead, we'll use functions 
+; at the namespace level.
+
+(defn is-bold-mark-active?
+  "  isBoldMarkActive(editor) {
+    const [match] = Editor.nodes(editor, {
+      match: n => n.bold === true,
+      universal: true,
+    })
+
+    return !!match
+  },"
+  [editor]
+  (let [[match]
+        (es6-iterator-seq
+          (.nodes js/Editor editor
+                    #js {:match
+                         (fn [n]
+                            (true? (.-bold n)))
+                         :universal true}))]
+    (boolean match)))
+
+(defn is-code-block-active?
+  "  isCodeBlockActive(editor) {
+    const [match] = Editor.nodes(editor, {
+      match: n => n.type === 'code',
+    })
+
+    return !!match
+  },"
+  [editor]
+  (let [[match]
+        (es6-iterator-seq
+          (.nodes js/Editor editor
+                    #js {:match
+                         (fn [n]
+                            (= (.-type n) "code"))}))]
+    (boolean match)))
+
+(defn toggle-bold-mark
+  "  toggleBoldMark(editor) {
+    const isActive = CustomEditor.isBoldMarkActive(editor)
+    Transforms.setNodes(
+      editor,
+      { bold: isActive ? null : true },
+      { match: n => Text.isText(n), split: true }
+    )
+  },"
+  [editor]
+  (let [isActive (is-bold-mark-active? editor)]
+    (.setNodes js/Transforms
+      editor
+      #js { :bold (if isActive nil true)}
+      #js { :match (fn [n] (js/Text.isText n))
+            :split true})))
+
+(defn toggle-code-block
+  "  toggleCodeBlock(editor) {
+    const isActive = CustomEditor.isCodeBlockActive(editor)
+    Transforms.setNodes(
+      editor,
+      { type: isActive ? null : 'code' },
+      { match: n => Editor.isBlock(editor, n) }
+    )
+  },"
+  [editor]
+  (let [isActive (is-code-block-active? editor)]
+    (.setNodes js/Transforms
+      editor
+      #js { :type (if isActive nil "code")}
+      #js { :match (fn [n] (js/Editor.isBlock editor n))})))
+
 (def app-bookmark (source-bookmark "src"))
 
 (defn App
@@ -72,16 +146,34 @@ const CodeElement = props => {
     }
   }, [])
 
-  // Define a leaf rendering function that is memoized with `useCallback`.
   const renderLeaf = useCallback(props => {
     return <Leaf {...props} />
   }, [])
 
   return (
+    // Add a toolbar with buttons that call the same methods.
     <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+      <div>
+        <button
+          onMouseDown={event => {
+            event.preventDefault()
+            CustomEditor.toggleBoldMark(editor)
+          }}
+        >
+          Bold
+        </button>
+        <button
+          onMouseDown={event => {
+            event.preventDefault()
+            CustomEditor.toggleCodeBlock(editor)
+          }}
+        >
+          Code Block
+        </button>
+      </div>
       <Editable
+        editor={editor}
         renderElement={renderElement}
-        // Pass in the `renderLeaf` function.
         renderLeaf={renderLeaf}
         onKeyDown={event => {
           if (!event.ctrlKey) {
@@ -91,24 +183,13 @@ const CodeElement = props => {
           switch (event.key) {
             case '`': {
               event.preventDefault()
-              const [match] = Editor.nodes(editor, {
-                match: n => n.type === 'code',
-              })
-              Transforms.setNodes(
-                editor,
-                { type: match ? null : 'code' },
-                { match: n => Editor.isBlock(editor, n) }
-              )
+              CustomEditor.toggleCodeBlock(editor)
               break
             }
 
             case 'b': {
               event.preventDefault()
-              Transforms.setNodes(
-                editor,
-                { bold: true },
-                { match: n => Text.isText(n), split: true }
-              )
+              CustomEditor.toggleBoldMark(editor)
               break
             }
           }
@@ -116,8 +197,7 @@ const CodeElement = props => {
       />
     </Slate>
   )
-}
-"
+}"
   []
   (let [editor (useMemo #(js/withReact (js/createEditor))
                         #js [])
@@ -133,20 +213,31 @@ const CodeElement = props => {
                "code" (React.createElement CodeElement props)
                       (React.createElement DefaultElement props)))
            #js [])
-        ; Define a leaf rendering function that is memoized with `useCallback`.
         renderLeaf
          (useCallback
            (fn renderLeaf [props]
              (React.createElement Leaf props))
            #js [])]
-    
+    ; Add a toolbar with buttons that call the same methods.
     (React.createElement js/Slate
       #js {:editor editor
            :value value
            :onChange #(setValue %)}
+      (React.createElement "div" #js {}
+        (React.createElement "button"
+          #js {:onMouseDown
+                (fn [event]
+                  (.preventDefault event)
+                  (toggle-bold-mark editor))}
+          "Bold")
+        (React.createElement "button"
+          #js {:onMouseDown
+                (fn [event]
+                  (.preventDefault event)
+                  (toggle-code-block editor))}
+          "Code Block"))
       (React.createElement js/Editable
         #js{:renderElement renderElement
-            ; Pass in the `renderLeaf` function.
             :renderLeaf renderLeaf
             :onKeyDown
             (fn onKeyDown [event]
@@ -155,59 +246,45 @@ const CodeElement = props => {
                "`"
                (do
                 (.preventDefault event)
-                (let [[match] 
-                      (es6-iterator-seq
-                        (.nodes js/Editor editor
-                                  #js {:match
-                                       (fn [n]
-                                          (= (.-type n) "code"))}))]
-
-                  ; Toggle the block type depending on whether there's already a match.
-                  (.setNodes js/Transforms
-                    editor
-                    #js { :type (if match "paragraph" "code")}
-                    #js { :match (fn [n] (js/Editor.isBlock editor n))})))
+                (toggle-code-block editor))
 
                "b"
                (do
                 (.preventDefault event)
-                (.setNodes js/Transforms
-                  editor
-                  #js { :bold true}
-                  #js { :match (fn [n] (js/Text.isText n))
-                        :split true}))
+                (toggle-bold-mark editor))
                
                ;default
                nil)))}))))
 
-(let [anchor "w04"
-      title "04 Applying custom formatting"]
+(let [anchor "w05"
+      title "05 Custom commands"]
   (defn ^:export -main
     []
     (slatecljs.common/render-demo
       App
       {:title title
        :objective "Use an event handler to format a span of text span using a custom leaf node.  Toggling back again is an excercise for the reader, but you can check out Walkthrough #3 for ideas."
-       :description "Press Ctrl+b to set selected text as bold."
+       :description "Select some text and try the buttons, Ctrl+b, ctrl-` as before."
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
-       :navigation [(let [anchor "w05"]
+       :navigation [#_
+                    (let [anchor "w06"]
                       {:text (common/title anchor)
                        :url (str "#" anchor)
                        :class "next"})
                     {:text title
-                     :url "https://docs.slatejs.org/walkthroughs/04-applying-custom-formatting"
+                     :url "https://docs.slatejs.org/walkthroughs/05-executing-commands"
                      :class "slate-tutorial"}
                     {:text (namespace ::x)
                      :url bookmark
                      :class "source-link"}
+                    {:text "CustomEditor"
+                     :url CustomEditor-bookmark
+                     :class "source-link"}
                     {:text "<App>"
                      :url app-bookmark
                      :class "source-link"}
-                    {:text "<Leaf>"
-                     :url leaf-bookmark
-                     :class "source-link"}
-                    (let [anchor "w03"]
+                    (let [anchor "w04"]
                       {:text (common/title anchor)
                        :url (str "#" anchor)
                        :class "previous"})]}))

@@ -5,7 +5,8 @@
             slatecljs.slate-01-installing-slate
             slatecljs.slate-02-event-handlers
             slatecljs.slate-03-defining-custom-elements
-            slatecljs.slate-04-applying-custom-formatting))
+            slatecljs.slate-04-applying-custom-formatting
+            slatecljs.slate-05-executing-commands))
 
 (def -main slatecljs.slate-01-installing-slate/-main)
 (defmethod common/app-component "" [_] -main)
