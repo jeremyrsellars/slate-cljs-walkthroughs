@@ -25,16 +25,15 @@
         (.highlightBlock hljs block)))
     (js/setTimeout highlight-source 1000)))
 
-(defn render-demo
-  [App {:keys [title about objective description cljs-source js-source navigation]}]
-  (let [app-host-element (js/document.getElementById "app")]
-    (gobj/set js/document "title" (str title " - Slate with ClojureScript"))
-    (js/ReactDOM.render
+(defn demo
+  [App {:keys [title about objective description source-comments cljs-source js-source navigation]}]
+  (do
       (js/React.createElement "div" #js {}
         (js/React.createElement "h1" #js {} title)
         (when about
           (js/React.createElement "p" #js {:class "about"} about))
-        (js/React.createElement "p" #js {:class "objective"}
+        (when objective
+         (js/React.createElement "p" #js {:class "objective"}
           objective
           (into-array
             (for [{:keys [text url class]} navigation
@@ -46,11 +45,10 @@
                       #js {:href url, :class class
                            :target "tutorial"}
                       (str "Slate tutorial " text))
-                    " (JavaScript)."]))))
-
+                    " (JavaScript)."])))))
 
         (when App
-          (js/React.createElement "h3" #js {} "Slate editor"))
+          (js/React.createElement "h3" #js {} "Interactive Demo"))
         (when description
           (js/React.createElement "p" #js {:class "description"}
             description))
@@ -59,8 +57,9 @@
             (js/React.createElement App
               #js {})))
 
-        (when (or cljs-source js-source)
+        (when (or cljs-source js-source source-comments)
          (js/React.createElement "div" #js {:id "source"}
+          source-comments
           (when cljs-source
             (js/React.createElement "h3" #js {} "ClojureScript"))
           (when cljs-source
@@ -78,14 +77,23 @@
                 (string/replace js-source
                   #"^-----*\r?\n(.*)\r?\n(.*)" "  //From $1 $2"))))))
 
-        (js/React.createElement "h3" #js {} "Where to next?")
-        (js/React.createElement "ul" #js {:id "nav"}
+        (when navigation
+         (js/React.createElement "h3" #js {} "Where to next?"))
+        (when navigation
+         (js/React.createElement "ul" #js {:id "nav"}
           (into-array
             (for [{:keys [text url class]} navigation]
               (js/React.createElement "li" #js {:class class}
                 (js/React.createElement "a"
                   #js {:href url, :class class
                        :target (when (= class "slate-tutorial") "tutorial")}
-                  text))))))
+                  text)))))))))
+
+(defn render-demo
+  [App {:keys [title] :as data}]
+  (let [app-host-element (js/document.getElementById "app")]
+    (gobj/set js/document "title" (str title " - Slate with ClojureScript"))
+    (js/ReactDOM.render
+      (demo App data)
       app-host-element)
     (highlight-source :force)))

@@ -125,6 +125,44 @@ const CodeElement = props => {
       #js { :type (if isActive nil "code")}
       #js { :match (fn [n] (js/Editor.isBlock editor n))})))
 
+(defn source-comments
+  []
+  (React.createElement "div" #js {}
+    (common/demo
+      nil
+      {:source-comments
+        (React.createElement "div" #js {}
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "h2" #js {}
+                "CustomEditor.isBoldMarkActive")
+             :cljs-source (with-out-str (cljs.repl/source is-bold-mark-active?))
+             :js-source (with-out-str (cljs.repl/doc is-bold-mark-active?))})
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "h2" #js {}
+                "CustomEditor.isCodeBlockActive")
+             :cljs-source (with-out-str (cljs.repl/source is-code-block-active?))
+             :js-source (with-out-str (cljs.repl/doc is-code-block-active?))})
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "h2" #js {}
+                "CustomEditor.toggleBoldMark")
+             :cljs-source (with-out-str (cljs.repl/source toggle-bold-mark))
+             :js-source (with-out-str (cljs.repl/doc toggle-bold-mark))})
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "h2" #js {}
+                "CustomEditor.toggleCodeBlock")
+             :cljs-source (with-out-str (cljs.repl/source toggle-code-block))
+             :js-source (with-out-str (cljs.repl/doc toggle-code-block))})
+          (React.createElement "h2" #js {}
+            "App"))})))
+
 (def app-bookmark (source-bookmark "src"))
 
 (defn App
@@ -265,6 +303,7 @@ const CodeElement = props => {
       {:title title
        :objective "Make reusable formatting commands to help keep code clear and maintainable."
        :description "Select some text and try the buttons, Ctrl+b, ctrl-` as before."
+       :source-comments (source-comments)
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w06"]
