@@ -1,6 +1,6 @@
 rm -rf target/public/
 mkdir target/public
-clojure -m figwheel.main -O whitespace --build-once dev
+clojure -m figwheel.main -O advanced --build-once dev
 cp --recursive resources/public/* target/public/
 rm -rf target/public/cljs-out/dev/
 powershell -f versionize-html.ps1 target/public/index.html
