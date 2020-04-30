@@ -51,6 +51,26 @@ const CodeElement = props => {
         (gobj/set "style" #js {:font-weight (if bold "bold" "normal")}))
       (.-children props))))
 
+(defn source-comments
+  []
+  (React.createElement "div" #js {}
+    (common/demo
+      nil
+      {:source-comments
+        (React.createElement "div" #js {}
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "div" #js {}
+                (React.createElement "h2" #js {}
+                  "Leaf")
+                "Leaves are usually inline-style, in that they represent something like text that flows.  Let's define a leaf node that can be bold or not.")
+             :cljs-source (with-out-str (cljs.repl/source Leaf))
+             :js-source (with-out-str (cljs.repl/doc Leaf))})
+          (React.createElement "h2" #js {}
+            "App")
+          "Now pull it all together.")})))
+
 (def app-bookmark (source-bookmark "src"))
 
 (defn App
@@ -189,6 +209,7 @@ const CodeElement = props => {
       {:title title
        :objective "Use an event handler to format a span of text span using a custom leaf node.  Toggling back again is an excercise for the reader, but you can check out Walkthrough #3 for ideas, or just move on to the next step."
        :description "Press Ctrl+b to set selected text as bold."
+       :source-comments (source-comments)
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w05"]
