@@ -187,7 +187,7 @@ const CodeElement = props => {
     (slatecljs.common/render-demo
       App
       {:title title
-       :objective "Use an event handler to format a span of text span using a custom leaf node.  Toggling back again is an excercise for the reader, but you can check out Walkthrough #3 for ideas."
+       :objective "Use an event handler to format a span of text span using a custom leaf node.  Toggling back again is an excercise for the reader, but you can check out Walkthrough #3 for ideas, or just move on to the next step."
        :description "Press Ctrl+b to set selected text as bold."
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
