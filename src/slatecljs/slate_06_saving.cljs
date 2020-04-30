@@ -44,6 +44,31 @@ const deserialize = string => {
         #js {:children #js [#js { :text line}]})
       (string/split s "\n"))))
 
+(defn source-comments
+  []
+  (React.createElement "div" #js {}
+    (common/demo
+      nil
+      {:source-comments
+        (React.createElement "div" #js {}
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "h2" #js {}
+                "Custom serializatoin as a single string")
+             :cljs-source (with-out-str (cljs.repl/source serialize))
+             :js-source (with-out-str (cljs.repl/doc serialize))})
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "h2" #js {}
+                "Custom deserialization by splitting string")
+             :cljs-source (with-out-str (cljs.repl/source deserialize))
+             :js-source (with-out-str (cljs.repl/doc deserialize))})
+          (React.createElement "h2" #js {}
+            "App"))})))
+
+
 (def app-bookmark (source-bookmark "src"))
 
 (defn App
@@ -99,6 +124,7 @@ const deserialize = string => {
       {:title title
        :objective "Save and load the document with a custom serialization format."
        :description "Type some text and then reload the page.  The text should be restored."
+       :source-comments (source-comments)
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [#_
