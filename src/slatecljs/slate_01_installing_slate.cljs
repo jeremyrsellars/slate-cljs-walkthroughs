@@ -54,17 +54,45 @@
           "WebPack"
           (React.createElement "ul" #js {}
             (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/webpack.config.js"} "webpack.config.js"))
-            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/src/js/index.js"} "src/js/index.js"))))
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/src/js/index.js"} "src/js/index.js"))
+            (React.createElement "li" #js {}
+              "Seeding the webpack "
+              (React.createElement "code" #js {}
+                "npx webpack")
+              (React.createElement "br" #js {})
+              "This command refers to " 
+              (React.createElement "code" #js {} "webpack.config.js")
+              " and "
+              (React.createElement "code" #js {} "src/js/index.js")
+              " to generate "
+              (React.createElement "code" #js {} "dist/index.bundle.js"))))
 
         (React.createElement "li" #js {} 
           "Figwheel and ClojureScript"
           (React.createElement "ul" #js {}
             (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/deps.edn"} "deps.edn"))
             (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/dev.cljs.edn"} "dev.cljs.edn"))
-            (React.createElement "li" #js {} "Along with the " (React.createElement "a" #js {:href "https://figwheel.org/docs/npm.html" :rel "nofollow"} "Figwheel.main NPM Modules tutorial"))))))))
+            (React.createElement "li" #js {} "Along with the " (React.createElement "a" #js {:href "https://figwheel.org/docs/npm.html" :rel "nofollow"} "Figwheel.main NPM Modules tutorial"))
+            (React.createElement "li" #js {}
+              "Running using the clojure CLI: "
+              (React.createElement "code" #js {}
+                "clojure -m figwheel.main -b dev -r"))))
 
-
-
+        (React.createElement "li" #js {} 
+          "Building"
+          (React.createElement "ul" #js {}
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/deps.edn"} "deps.edn"))
+            (React.createElement "li" #js {} (React.createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/dev.cljs.edn"} "dev.cljs.edn"))
+            (React.createElement "li" #js {}
+              "Building using the clojure CLI: "
+              (React.createElement "code" #js {}
+                "clojure -m figwheel.main -O advanced --build-once dev")
+              (React.createElement "br" #js {})
+              "This combines the artifacts from Webpack (React and Slate) "
+              "with the ClojureScript and Google Closure libraries "
+              "and the runs Closure's advanced compilation to optimize and discard the parts of Clojure and Closure that aren't used."
+              (React.createElement "br" #js {})
+              "For the walkthroughs, moving from optimizations whitespace to advanced cut out about 1.5 MB taking the single built JS file down to 445kb.")))))))
 
 (let [anchor "w01"
       title "01 Installing slate"]
