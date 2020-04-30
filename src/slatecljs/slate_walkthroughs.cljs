@@ -47,7 +47,12 @@
 (defn load-section [hash]
   (let [k (string/replace hash #"^#" "")
         component-fn (common/app-component k)]
-    (component-fn)))
+    (component-fn))
+  (window.scrollTo 0 0) ; scroll to top
+  (js/setTimeout ; focus the first editor
+    #(when-let [editor (js/document.querySelector "#editor-parent *")]
+      (.focus editor))
+    1))
 
 (defn- on-navigate [event]
   (load-section (str "#" (.-token event))))
