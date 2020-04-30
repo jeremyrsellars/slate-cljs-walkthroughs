@@ -33,6 +33,33 @@ const CodeElement = props => {
   (React.createElement "p" (.-attributes props)
     (.-children props)))
 
+(defn source-comments
+  []
+  (React.createElement "div" #js {}
+    (common/demo
+      nil
+      {:source-comments
+        (React.createElement "div" #js {}
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "div" #js {}
+                (React.createElement "h2" #js {}
+                  "CodeElement")
+                "Elements are usually block-style, in that they represent a whole line and are always containers.  Let's define a code block node and a default node to give them different styling.")
+             :cljs-source (with-out-str (cljs.repl/source CodeElement))
+             :js-source (with-out-str (cljs.repl/doc CodeElement))})
+          (common/demo
+            nil
+            {:source-comments
+              (React.createElement "h2" #js {}
+                "DefaultElement")
+             :cljs-source (with-out-str (cljs.repl/source DefaultElement))
+             :js-source (with-out-str (cljs.repl/doc DefaultElement))})
+          (React.createElement "h2" #js {}
+            "App")
+          "Now pull it all together.")})))
+
 (def app-bookmark (source-bookmark "src"))
 
 (defn App
@@ -127,6 +154,7 @@ const CodeElement = props => {
       {:title title
        :objective "Use an event handler to set a text block to a custom element, and then back again."
        :description "Press Ctrl+` to toggle code section for the line you're editing."
+       :source-comments (source-comments)
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w04"]
