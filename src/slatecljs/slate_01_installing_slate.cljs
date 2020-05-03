@@ -44,19 +44,22 @@
 (defn About
   []
   (createElement "div" #js {}
-    (createElement "p" #js {}
-      "You may want to take a look at these files for more on getting Slate, React, NPM, WebPack, and ClojureScript working together."
+      (createElement "p" #js {}
+        "You may want to take a look at these files for more on getting Slate, React, NPM, WebPack, and ClojureScript working together.")
       (createElement "ul" #js {} 
         (createElement "li" #js {}
           "NPM"
           (createElement "ul" #js {}
-            (createElement "li" #js {} (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/package.json"} "package.json"))))
+            (createElement "li" #js {}
+              (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/package.json"} "package.json"))))
 
         (createElement "li" #js {}
           "WebPack"
           (createElement "ul" #js {}
-            (createElement "li" #js {} (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/webpack.config.js"} "webpack.config.js"))
-            (createElement "li" #js {} (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/src/js/index.js"} "src/js/index.js"))
+            (createElement "li" #js {}
+              (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/webpack.config.js"} "webpack.config.js"))
+            (createElement "li" #js {}
+              (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/src/js/index.js"} "src/js/index.js"))
             (createElement "li" #js {}
               "Seeding the webpack "
               (createElement "code" #js {}
@@ -72,9 +75,13 @@
         (createElement "li" #js {} 
           "Figwheel and ClojureScript"
           (createElement "ul" #js {}
-            (createElement "li" #js {} (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/deps.edn"} "deps.edn"))
-            (createElement "li" #js {} (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/dev.cljs.edn"} "dev.cljs.edn"))
-            (createElement "li" #js {} "Along with the " (createElement "a" #js {:href "https://figwheel.org/docs/npm.html" :rel "nofollow"} "Figwheel.main NPM Modules tutorial"))
+            (createElement "li" #js {}
+              (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/deps.edn"} "deps.edn"))
+            (createElement "li" #js {}
+              (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/dev.cljs.edn"} "dev.cljs.edn"))
+            (createElement "li" #js {} 
+              "Along with the "
+              (createElement "a" #js {:href "https://figwheel.org/docs/npm.html" :rel "nofollow"} "Figwheel.main NPM Modules tutorial"))
             (createElement "li" #js {}
               "Running using the clojure CLI: "
               (createElement "code" #js {}
@@ -83,8 +90,10 @@
         (createElement "li" #js {} 
           "Building"
           (createElement "ul" #js {}
-            (createElement "li" #js {} (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/deps.edn"} "deps.edn"))
-            (createElement "li" #js {} (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/dev.cljs.edn"} "dev.cljs.edn"))
+            (createElement "li" #js {}
+              (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/deps.edn"} "deps.edn"))
+            (createElement "li" #js {}
+              (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs/jeremyrsellars/slate-cljs-walkthroughs/blob/master/dev.cljs.edn"} "dev.cljs.edn"))
             (createElement "li" #js {}
               "Building using the clojure CLI: "
               (createElement "code" #js {}
@@ -94,7 +103,7 @@
               "with the ClojureScript and Google Closure libraries "
               "and the runs Closure's advanced compilation to optimize and discard the parts of Clojure and Closure that aren't used."
               (createElement "br" #js {})
-              "For the walkthroughs, moving from optimizations whitespace to advanced cut out about 1.5 MB taking the single built JS file down to 445kb.")))))))
+              "For the walkthroughs, moving from optimizations whitespace to advanced cut out about 1.5 MB taking the single built JS file down to 445kb."))))))
 
 (let [anchor "w01"
       title "01 Installing slate"]

@@ -32,18 +32,18 @@
       (createElement "div" #js {}
         (createElement "h1" #js {} title)
         (when about
-          (createElement "p" #js {:class "about"} about))
+          (createElement "div" #js {:className "about"} about))
         (when objective
-         (createElement "p" #js {:class "objective"}
+         (createElement "div" #js {:className "objective"}
           objective
           (into-array
-            (for [{:keys [text url class]} navigation
+            (for [[idx {:keys [text url class]}] (map-indexed vector navigation)
                   :when (= class "slate-tutorial")]
-              (createElement "span" #js {}
-               #js [(createElement "br" #js {})
+              (createElement "span" #js {:key (str idx)}
+               #js [(createElement "br" #js {:key "br"})
                     "  Follow along with "
                     (createElement "a"
-                      #js {:href url, :class class
+                      #js {:href url, :className class, :key "a"
                            :target "tutorial"}
                       (str "Slate tutorial " text))
                     " (JavaScript)."])))))
@@ -51,7 +51,7 @@
         (when App
           (createElement "h3" #js {} "Interactive Demo"))
         (when description
-          (createElement "p" #js {:class "description"}
+          (createElement "p" #js {:className "description"}
             description))
         (when App
           (createElement "div" #js {:id "editor-parent"}
@@ -65,28 +65,28 @@
             (createElement "h3" #js {} "ClojureScript"))
           (when cljs-source
             (createElement "pre" #js {}
-              (createElement "code" #js {:class "language-clojure"
-                                                  :key (str "cljs:" title)}
+              (createElement "code" #js {:className "language-clojure"
+                                         :key (str "cljs:" title)}
                 (string/replace-first cljs-source
                   #"\"(?:\\\"|[^\"])*\"\s*" ""))))
           (when js-source
             (createElement "h3" #js {} "JavaScript (from Slate Tutorial)"))
           (when js-source
             (createElement "pre" #js {}
-              (createElement "code" #js {:class "language-javascript"
-                                                  :key (str "js:" title)}
+              (createElement "code" #js {:className "language-javascript"
+                                         :key (str "js:" title)}
                 (string/replace js-source
                   #"^-----*\r?\n(.*)\r?\n(.*)" "  //From $1 $2"))))))
 
         (when navigation
          (createElement "h3" #js {} "Where to next?"))
         (when navigation
-         (createElement "ul" #js {:id "nav"}
+         (createElement "ul" #js {:id "nav", :key "nav"}
           (into-array
-            (for [{:keys [text url class]} navigation]
-              (createElement "li" #js {:class class}
+            (for [[idx {:keys [text url class]}] (map-indexed vector navigation)]
+              (createElement "li" #js {:className class, :key (str idx)}
                 (createElement "a"
-                  #js {:href url, :class class
+                  #js {:href url, :className class
                        :target (when (= class "slate-tutorial") "tutorial")}
                   text)))))))))
 

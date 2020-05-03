@@ -50,7 +50,7 @@ const CodeElement = props => {
         bold (gobj/get leaf "bold")]
     (createElement "span"
       (doto (gobj/clone (.-attributes props))
-        (gobj/set "style" #js {:font-weight (if bold "bold" "normal")}))
+        (gobj/set "style" #js {:fontWeight (if bold "bold" "normal")}))
       (.-children props))))
 
 (def CustomEditor-bookmark (source-bookmark "src"))

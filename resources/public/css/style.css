@@ -56,13 +56,13 @@ h1.title {
   content: " on GitHub";
 }
 
-p.objective::before {
+.objective::before {
   content: "Objective:";
   padding-right: 1em;
   font-weight: 600;
 }
 
-p.description::before {
+.description::before {
   content: "Try the finished product!";
   padding-right: 1em;
   font-weight: 600;
