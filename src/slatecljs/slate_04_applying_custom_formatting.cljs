@@ -2,7 +2,9 @@
   (:require cljs.repl
             [clojure.string :as string]
             [goog.object :as gobj]
-            [react :as React :refer [useEffect useMemo useState useCallback]]
+            [react :as React :refer [createElement useCallback useEffect useMemo useState]]
+            [slate :refer [createEditor Editor Text Transforms]]
+            ["slate-react" :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
@@ -18,8 +20,8 @@ const CodeElement = props => {
   )
 }"
   [props]
-  (React.createElement "pre" (.-attributes props)
-    (React.createElement "code" #js{}
+  (createElement "pre" (.-attributes props)
+    (createElement "code" #js{}
       (.-children props))))
   
 (defn DefaultElement
@@ -27,7 +29,7 @@ const CodeElement = props => {
   return <p {...props.attributes}>{props.children}</p>
 }"
   [props]
-  (React.createElement "p" (.-attributes props)
+  (createElement "p" (.-attributes props)
     (.-children props)))
 
 (def leaf-bookmark (source-bookmark "src"))
@@ -46,28 +48,28 @@ const CodeElement = props => {
   [props]
   (let [leaf (gobj/get props "leaf")
         bold (gobj/get leaf "bold")]
-    (React.createElement "span"
+    (createElement "span"
       (doto (gobj/clone (.-attributes props))
         (gobj/set "style" #js {:font-weight (if bold "bold" "normal")}))
       (.-children props))))
 
 (defn source-comments
   []
-  (React.createElement "div" #js {}
+  (createElement "div" #js {}
     (common/demo
       nil
       {:source-comments
-        (React.createElement "div" #js {}
+        (createElement "div" #js {}
           (common/demo
             nil
             {:source-comments
-              (React.createElement "div" #js {}
-                (React.createElement "h2" #js {}
+              (createElement "div" #js {}
+                (createElement "h2" #js {}
                   "Leaf")
                 "Leaves are usually inline-style, in that they represent something like text that flows.  Let's define a leaf node that can be bold or not.")
              :cljs-source (with-out-str (cljs.repl/source Leaf))
              :js-source (with-out-str (cljs.repl/doc Leaf))})
-          (React.createElement "h2" #js {}
+          (createElement "h2" #js {}
             "App")
           "Now pull it all together.")})))
 
@@ -139,7 +141,7 @@ const CodeElement = props => {
 }
 "
   []
-  (let [editor (useMemo #(js/withReact (js/createEditor))
+  (let [editor (useMemo #(withReact (createEditor))
                         #js [])
         [value setValue]
         (useState
@@ -150,21 +152,21 @@ const CodeElement = props => {
          (useCallback
            (fn renderElement [props]
              (case (.-type (.-element props))
-               "code" (React.createElement CodeElement props)
-                      (React.createElement DefaultElement props)))
+               "code" (createElement CodeElement props)
+                      (createElement DefaultElement props)))
            #js [])
         ; Define a leaf rendering function that is memoized with `useCallback`.
         renderLeaf
          (useCallback
            (fn renderLeaf [props]
-             (React.createElement Leaf props))
+             (createElement Leaf props))
            #js [])]
     
-    (React.createElement js/Slate
+    (createElement Slate
       #js {:editor editor
            :value value
            :onChange #(setValue %)}
-      (React.createElement js/Editable
+      (createElement Editable
         #js{:renderElement renderElement
             ; Pass in the `renderLeaf` function.
             :renderLeaf renderLeaf
@@ -177,24 +179,24 @@ const CodeElement = props => {
                 (.preventDefault event)
                 (let [[match] 
                       (es6-iterator-seq
-                        (.nodes js/Editor editor
+                        (.nodes Editor editor
                                   #js {:match
                                        (fn [n]
                                           (= (.-type n) "code"))}))]
 
                   ; Toggle the block type depending on whether there's already a match.
-                  (.setNodes js/Transforms
+                  (.setNodes Transforms
                     editor
                     #js { :type (if match "paragraph" "code")}
-                    #js { :match (fn [n] (js/Editor.isBlock editor n))})))
+                    #js { :match (fn [n] (Editor.isBlock editor n))})))
 
                "b"
                (do
                 (.preventDefault event)
-                (.setNodes js/Transforms
+                (.setNodes Transforms
                   editor
                   #js { :bold true}
-                  #js { :match (fn [n] (js/Text.isText n))
+                  #js { :match (fn [n] (Text.isText n))
                         :split true}))
                
                ;default

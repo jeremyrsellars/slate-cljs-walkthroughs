@@ -1,0 +1,5 @@
+^{:npm {:bundles {"dist/index.bundle.js" "src/js/index.js"}}
+  :css-dirs ["resources/public/css"]}
+{:main slatecljs.static-site
+ :target :nodejs}
+ ;:watch ["src" "src-node" "target" "resources"]}

@@ -2,9 +2,10 @@
   (:require cljs.repl
             [clojure.string :as string]
             [goog.object :as gobj]
-            [react :as React :refer [useEffect useMemo useState useCallback]]
-            [slatecljs.common :as common]
-            [slate :refer [Node]])
+            [react :as React :refer [createElement useCallback useEffect useMemo useState]]
+            [slate :refer [createEditor Editor Node Text Transforms]]
+            ["slate-react" :refer [Editable Slate withReact]]
+            [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
 (def bookmark (source-bookmark "src"))
@@ -23,7 +24,7 @@ const serialize = value => {
   [value]
   (string/join "\n"
     (map
-      (fn [n] (.string js/slate.Node n))
+      (fn [n] (Node.string n))
       value)))
   
 (defn deserialize
@@ -46,26 +47,26 @@ const deserialize = string => {
 
 (defn source-comments
   []
-  (React.createElement "div" #js {}
+  (createElement "div" #js {}
     (common/demo
       nil
       {:source-comments
-        (React.createElement "div" #js {}
+        (createElement "div" #js {}
           (common/demo
             nil
             {:source-comments
-              (React.createElement "h2" #js {}
+              (createElement "h2" #js {}
                 "Custom serializatoin as a single string")
              :cljs-source (with-out-str (cljs.repl/source serialize))
              :js-source (with-out-str (cljs.repl/doc serialize))})
           (common/demo
             nil
             {:source-comments
-              (React.createElement "h2" #js {}
+              (createElement "h2" #js {}
                 "Custom deserialization by splitting string")
              :cljs-source (with-out-str (cljs.repl/source deserialize))
              :js-source (with-out-str (cljs.repl/doc deserialize))})
-          (React.createElement "h2" #js {}
+          (createElement "h2" #js {}
             "App"))})))
 
 
@@ -94,7 +95,7 @@ const deserialize = string => {
   )
 }"
   []
-  (let [editor (useMemo #(js/withReact (js/createEditor))
+  (let [editor (useMemo #(withReact (createEditor))
                         #js [])
         [value setValue]
         (useState
@@ -104,7 +105,7 @@ const deserialize = string => {
           (or (.getItem js/localStorage "content")
               "")))]
     ; Add a toolbar with buttons that call the same methods.
-    (React.createElement js/Slate
+    (createElement Slate
       #js {:editor editor
            :value value
            :onChange
@@ -113,7 +114,7 @@ const deserialize = string => {
               (.setItem js/localStorage "content"
                 ;(.stringify js/JSON value)
                 (serialize value)))}
-      (React.createElement js/Editable #js{}))))
+      (createElement Editable #js{}))))
 
 (let [anchor "w06"
       title "06 Saving to a database"]

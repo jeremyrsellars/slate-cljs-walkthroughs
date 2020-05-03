@@ -1,7 +1,9 @@
 (ns slatecljs.slate-03-defining-custom-elements
   (:require cljs.repl
             [clojure.string :as string]
-            [react :as React :refer [useEffect useMemo useState useCallback]]
+            [react :as React :refer [createElement useCallback useEffect useMemo useState]]
+            [slate :refer [createEditor Editor Transforms]]
+            ["slate-react" :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
@@ -19,8 +21,8 @@ const CodeElement = props => {
   )
 }"
   [props]
-  (React.createElement "pre" (.-attributes props)
-    (React.createElement "code" #js{}
+  (createElement "pre" (.-attributes props)
+    (createElement "code" #js{}
       (.-children props))))
   
 (def default-bookmark (source-bookmark "src"))
@@ -30,21 +32,21 @@ const CodeElement = props => {
   return <p {...props.attributes}>{props.children}</p>
 }"
   [props]
-  (React.createElement "p" (.-attributes props)
+  (createElement "p" (.-attributes props)
     (.-children props)))
 
 (defn source-comments
   []
-  (React.createElement "div" #js {}
+  (createElement "div" #js {}
     (common/demo
       nil
       {:source-comments
-        (React.createElement "div" #js {}
+        (createElement "div" #js {}
           (common/demo
             nil
             {:source-comments
-              (React.createElement "div" #js {}
-                (React.createElement "h2" #js {}
+              (createElement "div" #js {}
+                (createElement "h2" #js {}
                   "CodeElement")
                 "Elements are usually block-style, in that they represent a whole line and are always containers.  Let's define a code block node and a default node to give them different styling.")
              :cljs-source (with-out-str (cljs.repl/source CodeElement))
@@ -52,11 +54,11 @@ const CodeElement = props => {
           (common/demo
             nil
             {:source-comments
-              (React.createElement "h2" #js {}
+              (createElement "h2" #js {}
                 "DefaultElement")
              :cljs-source (with-out-str (cljs.repl/source DefaultElement))
              :js-source (with-out-str (cljs.repl/doc DefaultElement))})
-          (React.createElement "h2" #js {}
+          (createElement "h2" #js {}
             "App")
           "Now pull it all together.")})))
 
@@ -105,7 +107,7 @@ const CodeElement = props => {
   )
 }"
   []
-  (let [editor (useMemo #(js/withReact (js/createEditor))
+  (let [editor (useMemo #(withReact (createEditor))
                         #js [])
         ; Add the initial value when setting up our state.
         [value setValue]
@@ -117,15 +119,15 @@ const CodeElement = props => {
          (useCallback
            (fn renderElement [props]
              (case (.-type (.-element props))
-               "code" (React.createElement CodeElement props)
-                      (React.createElement DefaultElement props)))
+               "code" (createElement CodeElement props)
+                      (createElement DefaultElement props)))
            #js [])]
     
-    (React.createElement js/Slate
+    (createElement Slate
       #js {:editor editor
            :value value
            :onChange #(setValue %)}
-      (React.createElement js/Editable
+      (createElement Editable
         #js{:renderElement renderElement
             :onKeyDown
             (fn onKeyDown [event]
@@ -134,16 +136,16 @@ const CodeElement = props => {
                 ; Determine whether any of the currently selected blocks are code blocks.
                 (let [[match] 
                       (es6-iterator-seq
-                        (.nodes js/Editor editor
+                        (.nodes Editor editor
                                   #js {:match
                                        (fn [n]
                                           (= (.-type n) "code"))}))]
 
                   ; Toggle the block type depending on whether there's already a match.
-                  (.setNodes js/Transforms
+                  (.setNodes Transforms
                     editor
                     #js { :type (if match "paragraph" "code")}
-                    #js { :match (fn [n] (js/Editor.isBlock editor n))}))))}))))
+                    #js { :match (fn [n] (Editor.isBlock editor n))}))))}))))
 
 (let [anchor "w03"
       title "03 Defining custom elements"]

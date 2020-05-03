@@ -1,14 +1,17 @@
-(ns slatecljs.slate-walkthroughs 
+(ns slatecljs.static-site
   (:require [clojure.string :as string]
             [react :refer [createElement]]
-            [slatecljs.browser :as browser]
+            ["react-dom/server" :as ReactDOMServer :refer [renderToString]]
             [slatecljs.common :as common]
             slatecljs.slate-01-installing-slate
             slatecljs.slate-02-event-handlers
             slatecljs.slate-03-defining-custom-elements
             slatecljs.slate-04-applying-custom-formatting
             slatecljs.slate-05-executing-commands
-            slatecljs.slate-06-saving))
+            ;slatecljs.slate-06-saving ; deferring while localStorage is not defined in nodejs
+            cljs.nodejs))
+
+(cljs.nodejs/enable-util-print!)
 
 (defn App
   []
@@ -25,7 +28,7 @@
 
 (let [anchor ""
       title "Introduction"]
-  (defn ^:export -main
+  (defn ^:export introduction
     []
     (slatecljs.common/render-demo
       nil
@@ -41,25 +44,23 @@
             :url "https://docs.slatejs.org/walkthroughs/01-installing-slate"
             :class "slate-tutorial"}]])}))
 
-  (defmethod common/app-component anchor [_] -main)
+  (defmethod common/app-component anchor [_] introduction)
   (defmethod common/title anchor [_] title))
 
+(defn render-demo
+  [App {:keys [title] :as data}]
+  (println (str title " - Slate with ClojureScript"))
+  (renderToString
+    (common/demo App data)))
 
-(defn load-section [hash]
-  (let [k (string/replace hash #"^#" "")
-        component-fn (common/app-component k)]
-    (component-fn))
-  (window.scrollTo 0 0) ; scroll to top
-  (js/setTimeout ; focus the first editor
-    #(when-let [editor (js/document.querySelector "#editor-parent *")]
-      (.focus editor))
-    1))
+(defn save-section [hash]
+  (println ((common/app-component hash))))
 
-(defn- on-navigate [event]
-  (load-section (str "#" (.-token event))))
+(defn ^:export -main
+  [& args]
+  (doall (map println args))
+  (binding [common/render-demo render-demo]
+    (doseq [hash (sort (keys (methods common/app-component)))]
+      (save-section hash))))
 
-(defonce _init_navigation-handler
-  (browser/add-navigation-handler! on-navigate))
-
-(load-section (.-hash (.-location js/window)))
-
+(-main)

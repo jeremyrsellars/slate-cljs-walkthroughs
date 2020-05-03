@@ -21,6 +21,7 @@
 (defn set-scheme! [scheme]
   (.set cookies "scheme" (when scheme (name scheme))))
 
+#_
 (defn set-timeout!
   [f ms]
   (.setTimeout js/window f ms))

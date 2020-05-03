@@ -7,7 +7,7 @@
 				".rebel_readline_history"
 				,"dist/index.bundle.js"
 				,".lein-repl-history"],
-			"folder_exclude_patterns":["target", ".cpcache", "node_modules"]
+			"folder_exclude_patterns":["out", "target", ".cpcache", "node_modules"]
 		}
 	]
 }

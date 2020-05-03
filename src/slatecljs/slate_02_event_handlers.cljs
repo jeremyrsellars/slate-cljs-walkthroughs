@@ -1,7 +1,9 @@
 (ns slatecljs.slate-02-event-handlers
   (:require cljs.repl
             [clojure.string :as string]
-            [react :as React :refer [useEffect useMemo useState]]
+            [react :as React :refer [createElement useEffect useMemo useState]]
+            [slate :refer [createEditor]]
+            ["slate-react" :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
@@ -33,7 +35,7 @@
   )
 }"
   []
-  (let [editor (useMemo #(js/withReact (js/createEditor))
+  (let [editor (useMemo #(withReact (createEditor))
                        #js [])
         ; Add the initial value when setting up our state.
         [value setValue]
@@ -41,11 +43,11 @@
          #js [#js {:type "paragraph"
                    :children
                    #js [#js {:text "A line of text in a paragraph."}]}])]
-    (React.createElement js/Slate
+    (createElement Slate
       #js {:editor editor
            :value value
            :onChange #(setValue %)}
-      (React.createElement js/Editable
+      (createElement Editable
         #js{:onKeyDown
             (fn onKeyDown [event]
               ; (js/console.log (.-key event)
