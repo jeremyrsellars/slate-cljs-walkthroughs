@@ -24,7 +24,7 @@ const serialize = value => {
   [value]
   (string/join "\n"
     (map
-      (fn [n] (Node.string n))
+      (fn [n] (.string Node n))
       value)))
   
 (defn deserialize

@@ -20,6 +20,8 @@ window.Text = Text
 
 // Import the Slate components and React plugin.
 import { Slate, Editable, withReact } from 'slate-react'
-window.Slate = Slate
-window.Editable = Editable
-window.withReact = withReact
+window['slate-react'] = {
+	Slate: Slate,
+	Editable: Editable,
+	withReact: withReact,
+}

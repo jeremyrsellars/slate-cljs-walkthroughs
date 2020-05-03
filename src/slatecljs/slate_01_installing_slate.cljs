@@ -3,7 +3,7 @@
             [clojure.string :as string]
             [react :as React :refer [createElement useEffect useMemo useState]]
             [slate :refer [createEditor]]
-            ["slate-react" :refer [Editable Slate withReact]]
+            [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
