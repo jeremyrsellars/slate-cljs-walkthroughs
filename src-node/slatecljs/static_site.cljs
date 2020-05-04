@@ -9,7 +9,7 @@
             slatecljs.slate-03-defining-custom-elements
             slatecljs.slate-04-applying-custom-formatting
             slatecljs.slate-05-executing-commands
-            ;slatecljs.slate-06-saving ; deferring while localStorage is not defined in nodejs
+            slatecljs.slate-06-saving
             [cljs-node-io.core :as io :refer [spit]]))
 
 (cljs.nodejs/enable-util-print!)
@@ -39,7 +39,7 @@
        :objective "Feel free to read through the code or clone this repo and edit it to improve your understanding."
        :navigation
         (reduce into []
-         [(for [anchor ["w01" "w02" "w03" "w04" "w05" #_"w06"]]
+         [(for [anchor ["w01" "w02" "w03" "w04" "w05" "w06"]]
             {:text (common/title anchor)
              :url (common/rendered-link anchor)})
           [{:text "01 Installing Slate"

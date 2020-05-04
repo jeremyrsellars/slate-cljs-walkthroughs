@@ -4,6 +4,7 @@
   "description": "clojure -m figwheel.main -b dev -r",
   "main": "webpack.config.js",
   "dependencies": {
+    "node-localstorage": "^2.1.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "slate": "^0.57.1",
