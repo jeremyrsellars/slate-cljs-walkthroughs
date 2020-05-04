@@ -2,4 +2,3 @@
   :css-dirs ["resources/public/css"]}
 {:main slatecljs.static-site
  :target :nodejs}
- ;:watch ["src" "src-node" "target" "resources"]}

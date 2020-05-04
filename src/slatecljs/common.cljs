@@ -3,6 +3,11 @@
             [react :refer [createElement]]
             [goog.object :as gobj]))
 
+(def ^:dynamic rendered-link
+  (fn rendered-link
+    [hash]
+    (str "#" hash)))
+
 (defmulti app-component
   (fn app-component-dispatch [hash]
     (or hash ""))
@@ -18,7 +23,7 @@
 
 (defn ^:export highlight-source
   [force?]
-  (if-let [hljs nil];(comment (gobj/get js/window "hljs"))]
+  (if-let [hljs (gobj/get js/window "hljs")]
     (let [selector (if force
                         "#source pre code"
                         "#source pre code:not(.hljs)")]

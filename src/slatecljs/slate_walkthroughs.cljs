@@ -30,6 +30,7 @@
     (slatecljs.common/render-demo
       nil
       {:title title
+       :anchor anchor
        :about (App)
        :objective "Feel free to read through the code or clone this repo and edit it to improve your understanding."
        :navigation

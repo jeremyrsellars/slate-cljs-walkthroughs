@@ -4,7 +4,7 @@
             [goog.object :as gobj]
             [react :as React :refer [createElement useCallback useEffect useMemo useState]]
             [slate :refer [createEditor Editor Transforms]]
-            ["slate-react" :refer [Editable Slate withReact]]
+            [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
@@ -303,6 +303,7 @@ const CodeElement = props => {
     (slatecljs.common/render-demo
       App
       {:title title
+       :anchor anchor
        :objective "Make reusable formatting commands to help keep code clear and maintainable."
        :description "Select some text and try the buttons, Ctrl+b, ctrl-` as before."
        :source-comments (source-comments)
@@ -310,7 +311,7 @@ const CodeElement = props => {
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w06"]
                       {:text (common/title anchor)
-                       :url (str "#" anchor)
+                       :url (common/rendered-link anchor)
                        :class "next"})
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/05-executing-commands"
@@ -326,7 +327,7 @@ const CodeElement = props => {
                      :class "source-link"}
                     (let [anchor "w04"]
                       {:text (common/title anchor)
-                       :url (str "#" anchor)
+                       :url (common/rendered-link anchor)
                        :class "previous"})]}))
 
   (defmethod common/app-component anchor [_] -main)

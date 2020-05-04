@@ -4,7 +4,7 @@
             [goog.object :as gobj]
             [react :as React :refer [createElement useCallback useEffect useMemo useState]]
             [slate :refer [createEditor Editor Text Transforms]]
-            ["slate-react" :refer [Editable Slate withReact]]
+            [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
@@ -209,6 +209,7 @@ const CodeElement = props => {
     (slatecljs.common/render-demo
       App
       {:title title
+       :anchor anchor
        :objective "Use an event handler to format a span of text span using a custom leaf node.  Toggling back again is an excercise for the reader, but you can check out Walkthrough #3 for ideas, or just move on to the next step."
        :description "Press Ctrl+b to set selected text as bold."
        :source-comments (source-comments)
@@ -216,7 +217,7 @@ const CodeElement = props => {
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w05"]
                       {:text (common/title anchor)
-                       :url (str "#" anchor)
+                       :url (common/rendered-link anchor)
                        :class "next"})
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/04-applying-custom-formatting"
@@ -232,7 +233,7 @@ const CodeElement = props => {
                      :class "source-link"}
                     (let [anchor "w03"]
                       {:text (common/title anchor)
-                       :url (str "#" anchor)
+                       :url (common/rendered-link anchor)
                        :class "previous"})]}))
 
   (defmethod common/app-component anchor [_] -main)

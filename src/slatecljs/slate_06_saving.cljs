@@ -4,7 +4,7 @@
             [goog.object :as gobj]
             [react :as React :refer [createElement useCallback useEffect useMemo useState]]
             [slate :refer [createEditor Editor Node Text Transforms]]
-            ["slate-react" :refer [Editable Slate withReact]]
+            [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
 
@@ -123,6 +123,7 @@ const deserialize = string => {
     (slatecljs.common/render-demo
       App
       {:title title
+       :anchor anchor
        :objective "Save and load the document with a custom serialization format."
        :description "Type some text and then reload the page.  The text should be restored."
        :source-comments (source-comments)
@@ -131,7 +132,7 @@ const deserialize = string => {
        :navigation [#_
                     (let [anchor "w07"]
                       {:text (common/title anchor)
-                       :url (str "#" anchor)
+                       :url (common/rendered-link anchor)
                        :class "next"})
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/06-saving-to-a-database"
@@ -144,7 +145,7 @@ const deserialize = string => {
                      :class "source-link"}
                     (let [anchor "w05"]
                       {:text (common/title anchor)
-                       :url (str "#" anchor)
+                       :url (common/rendered-link anchor)
                        :class "previous"})]}))
 
   (defmethod common/app-component anchor [_] -main)

@@ -112,6 +112,7 @@
     (slatecljs.common/render-demo
       App
       {:title title
+       :anchor anchor
        :about (About)
        :objective "Get started by showing a editable Slate."
        :description "Type some text"
@@ -119,14 +120,18 @@
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w02"]
                       {:text (common/title anchor)
-                       :url (str "#" anchor)
+                       :url (common/rendered-link anchor)
                        :class "next"})
                     {:text "<App>"
                      :url bookmark
                      :class "source-link"}
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/01-installing-slate"
-                     :class "slate-tutorial"}]}))
+                     :class "slate-tutorial"}
+                    (let [anchor ""]
+                      {:text (common/title anchor)
+                       :url (common/rendered-link anchor)
+                       :class "previous"})]}))
                     
   (defmethod common/app-component anchor [_] -main)
   (defmethod common/title anchor [_] title))

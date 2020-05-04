@@ -30,4 +30,15 @@ Also, you may want to take a look at these files for more on getting Slate, Reac
 
 After editing [src/js/index.js](src/js/index.js), you'll need to run webpack again. See [here](https://figwheel.org/docs/npm.html#create-the-indexjs-file).
 
+    npx webpack  --mode=development
+
+or
+
     npx webpack
+
+
+### Static pages
+
+    clj -A:build-static -m cljs.main -O simple -t nodejs -v -c slatecljs.static-site
+
+    node out/main.js

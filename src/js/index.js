@@ -1,5 +1,4 @@
 import React from "react";
-// import React, { useEffect, useMemo, useState } from "react";
 import ReactDOM from 'react-dom';
 window.React = React;
 window.ReactDOM = ReactDOM;
@@ -24,4 +23,8 @@ window['slate-react'] = {
 	Slate: Slate,
 	Editable: Editable,
 	withReact: withReact,
+}
+
+window.hljs = {
+	highlightBlock: () => console.log("Uh oh.  hljs.highlightBlock isn't replaced."),
 }
