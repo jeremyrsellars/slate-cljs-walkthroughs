@@ -8,7 +8,8 @@
             slatecljs.slate-03-defining-custom-elements
             slatecljs.slate-04-applying-custom-formatting
             slatecljs.slate-05-executing-commands
-            slatecljs.slate-06-saving))
+            slatecljs.slate-06-saving
+            slatecljs.slate-cljs-01-now-witness-the-power))
 
 (defn App
   []
@@ -35,7 +36,8 @@
        :objective "Feel free to read through the code or clone this repo and edit it to improve your understanding."
        :navigation
         (reduce into []
-         [(for [anchor ["w01" "w02" "w03" "w04" "w05" "w06"]]
+         [(for [anchor ["w01" "w02" "w03" "w04" "w05" "w06"
+                        "c01"]]
             {:text (common/title anchor)
              :url (str "#" anchor)})
           [{:text "01 Installing Slate"

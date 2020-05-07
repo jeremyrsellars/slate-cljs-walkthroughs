@@ -1,7 +1,7 @@
 (ns slatecljs.nodes)
 
 (comment
-  (defrecord Text [^String text])
+  (defrecord Text [^String text]) ; Can't really do this because of Text.isText using isPlainObject
 
   (defrecord Editor [children])
 
