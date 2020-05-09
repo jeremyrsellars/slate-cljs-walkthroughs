@@ -26,5 +26,4 @@ window['slate-react'] = {
 }
 
 window.hljs = {
-	highlightBlock: () => console.log("Uh oh.  hljs.highlightBlock isn't replaced."),
 }

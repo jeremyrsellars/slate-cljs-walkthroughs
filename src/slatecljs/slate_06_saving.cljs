@@ -132,7 +132,7 @@ const deserialize = string => {
        :navigation [#_
                     (let [anchor "w07"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "next"})
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/06-saving-to-a-database"
@@ -145,7 +145,7 @@ const deserialize = string => {
                      :class "source-link"}
                     (let [anchor "w05"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "previous"})]}))
 
   (defmethod common/app-component anchor [_] -main)

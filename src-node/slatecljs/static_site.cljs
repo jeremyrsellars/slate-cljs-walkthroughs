@@ -41,7 +41,7 @@
         (reduce into []
          [(for [anchor ["w01" "w02" "w03" "w04" "w05" "w06"]]
             {:text (common/title anchor)
-             :url (common/rendered-link anchor)})
+             :rendered-link (common/rendered-link anchor)})
           [{:text "01 Installing Slate"
             :url "https://docs.slatejs.org/walkthroughs/01-installing-slate"
             :class "slate-tutorial"}]])}))
@@ -116,8 +116,7 @@
 (defn ^:export -main
   [& [out args]]
   (doall (map println args))
-  (binding [common/render-demo static-render-demo
-            common/rendered-link static-rendered-link]
+  (binding [common/render-demo static-render-demo]
     (doseq [hash (sort (keys (methods common/app-component)))]
       (save-section out hash))))
 
