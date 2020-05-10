@@ -1,4 +1,4 @@
-{:deps {com.bhauman/figwheel-main {:mvn/version "0.2.3"}
+{:deps {com.bhauman/figwheel-main {:mvn/version "0.2.4"}
         com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
         cljsjs/slate {:mvn/version "0.33.6-0"}
         cljsjs/slate-react {:mvn/version "0.12.6-0"}
