@@ -5,7 +5,7 @@
 			"path": ".",
 			"file_exclude_patterns":[
 				".rebel_readline_history"
-				,"dist/index.bundle.js"
+				,"dist/*.bundle.js"
 				,".lein-repl-history"],
 			"folder_exclude_patterns":["out", "target", ".cpcache", "node_modules"]
 		}

@@ -1,0 +1,7 @@
+^{:npm {:bundles {"dist/static.bundle.js" "src/js/index-static.js"}}
+  :css-dirs ["resources/public/css"]}
+{:main slatecljs.static-site
+ :target :nodejs
+ :pseudo-names true
+ :pretty-print true
+ :source-map "target/node/static/static-main.js.map"}

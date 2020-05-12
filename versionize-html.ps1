@@ -3,8 +3,6 @@ param (
   [string]$version
 )
 
-Write-Output "Versionizing $($html)."
-
 Function Get-ContentAddressable {
     Param($match)
     $link = $match.Groups[0].Value
@@ -20,8 +18,13 @@ Function Get-ContentAddressable {
     $version
 }
 
-$content = [System.Text.RegularExpressions.Regex]::Replace( `
-    (Get-Content $html), `
-    '(?<==")[^:"]+\.(?:js|css|png|jpg)(?=")', `
-    {param($match) "$($match)?v=$(Get-ContentAddressable $match)"})
-$content | Out-File $html -Force -Encoding ASCII
+if ((test-path $html -PathType leaf).Exists) {
+    Write-Output "Versionizing $($html)."
+    [System.Text.RegularExpressions.Regex]::Replace( `
+        (Get-Content $html), `
+        '(?<==")[^:?"]+\.(?:js|css|png|jpg)(?=")', `
+        {param($match) "$($match)?v=$(Get-ContentAddressable $match)"}) `
+    | Out-File $html -Force -Encoding ASCII
+} else  {
+    Write-Error "$html does not exist"
+}

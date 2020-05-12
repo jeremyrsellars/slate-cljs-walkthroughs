@@ -1,7 +1,7 @@
 (ns slatecljs.slate-02-event-handlers
   (:require cljs.repl
             [clojure.string :as string]
-            [react :as React :refer [createElement useEffect useMemo useState]]
+            [react :refer [createElement useEffect useMemo useState]]
             [slate :refer [createEditor]]
             [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])

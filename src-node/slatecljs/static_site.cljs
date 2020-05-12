@@ -38,8 +38,6 @@
       (createElement "link" #js {:rel "stylesheet"
                                  :href "highlightjs/styles/obsidian.css"})
 
-      (createElement "script" #js {:src "highlightjs/highlight.pack.js"})
-
       (createElement "script"
         #js {:dangerouslySetInnerHTML
               #js {:__html (str "slatecljs.common.highlight_source(\"force\");")}})

@@ -1,7 +1,10 @@
 (ns slatecljs.common
   (:require [clojure.string :as string]
             [react :refer [createElement]]
-            [goog.object :as gobj]))
+            [react-dom :refer [render]]
+            ;[ReactDOM]
+            [goog.object :as gobj]
+            ["hljs" :refer [highlightBlock]]))
 
 (def ^:dynamic rendered-link
   (fn rendered-link
@@ -23,13 +26,11 @@
 
 (defn ^:export highlight-source
   [force?]
-  (if-let [hljs (gobj/get js/window "hljs")]
-    (let [selector (if force
-                        "#source pre code"
-                        "#source pre code:not(.hljs)")]
-      (doseq [block (array-seq (.querySelectorAll js/document selector))]
-        (.highlightBlock hljs block)))
-    (js/setTimeout highlight-source 1000)))
+  (let [selector (if force
+                      "#source pre code"
+                      "#source pre code:not(.hljs)")]
+    (doseq [block (array-seq (.querySelectorAll js/document selector))]
+      (highlightBlock block))))
 
 (defn demo
   [App {:keys [title about objective description source-comments cljs-source js-source navigation]}]
@@ -88,10 +89,10 @@
         (when navigation
          (createElement "ul" #js {:id "nav", :key "nav"}
           (into-array
-            (for [[idx {:keys [text url class]}] (map-indexed vector navigation)]
+            (for [[idx {:keys [text url rendered-link class] :as x}] (map-indexed vector navigation)]
               (createElement "li" #js {:className class, :key (str idx)}
                 (createElement "a"
-                  #js {:href url, :className class
+                  #js {:href (or rendered-link url) :className class
                        :target (when (= class "slate-tutorial") "tutorial")}
                   text)))))))))
 
@@ -100,7 +101,7 @@
   [App {:keys [title] :as data}]
   (let [app-host-element (js/document.getElementById "app")]
     (gobj/set js/document "title" (str title " - Slate with ClojureScript"))
-    (js/ReactDOM.render
+    (render
       (demo App data)
       app-host-element)
     (highlight-source :force))))

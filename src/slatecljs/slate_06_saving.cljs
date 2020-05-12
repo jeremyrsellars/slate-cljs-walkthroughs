@@ -2,7 +2,7 @@
   (:require cljs.repl
             [clojure.string :as string]
             [goog.object :as gobj]
-            [react :as React :refer [createElement useCallback useEffect useMemo useState]]
+            [react :refer [createElement useCallback useEffect useMemo useState]]
             [slate :refer [createEditor Editor Node Text Transforms]]
             [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])

@@ -1,7 +1,7 @@
 (ns slatecljs.slate-03-defining-custom-elements
   (:require cljs.repl
             [clojure.string :as string]
-            [react :as React :refer [createElement useCallback useEffect useMemo useState]]
+            [react :refer [createElement useCallback useEffect useMemo useState]]
             [slate :refer [createEditor Editor Transforms]]
             [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
