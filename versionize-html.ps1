@@ -18,7 +18,7 @@ Function Get-ContentAddressable {
     $version
 }
 
-if ((test-path $html -PathType leaf).Exists) {
+if ((test-path $html -PathType leaf)) {
     Write-Output "Versionizing $($html)."
     [System.Text.RegularExpressions.Regex]::Replace( `
         (Get-Content $html), `
@@ -26,5 +26,5 @@ if ((test-path $html -PathType leaf).Exists) {
         {param($match) "$($match)?v=$(Get-ContentAddressable $match)"}) `
     | Out-File $html -Force -Encoding ASCII
 } else  {
-    Write-Error "$html does not exist"
+    Write-Error "Cannot versionize; $html does not exist"
 }
