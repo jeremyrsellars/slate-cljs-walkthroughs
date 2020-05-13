@@ -80,8 +80,7 @@
 (defn ^:export -main
   [& [out args]]
   (doall (map println args))
-  (binding [common/render-demo static-render-demo
-            common/rendered-link static-rendered-link]
+  (binding [common/render-demo static-render-demo]
     (doseq [hash (sort (keys (methods common/app-component)))]
       (save-section out hash))))
 

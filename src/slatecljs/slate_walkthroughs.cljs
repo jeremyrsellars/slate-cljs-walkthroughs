@@ -1,4 +1,4 @@
-(ns slatecljs.slate-walkthroughs 
+(ns slatecljs.slate-walkthroughs
   (:require [clojure.string :as string]
             [react :refer [createElement]]
             [slatecljs.browser :as browser]
@@ -11,21 +11,24 @@
             slatecljs.slate-05-executing-commands
             slatecljs.slate-06-saving))
 
-(defn ^:export load-section [hash]
-  (let [k (string/replace hash #"^#" "")
-        component-fn (common/app-component k)]
-    (component-fn))
+(defn ^:export load-section [pathname]
+  (let [hash (browser/normalize-pathname pathname)
+        pathname (when-not (string/blank? hash)
+                  (str "/" hash ".html"))
+        component-fn (common/app-component hash)]
+    (when-not (= pathname (.-pathname js/location))
+      (browser/setToken hash (common/title hash))) ; like history.pushState
+    (binding [common/load-section load-section]
+      (component-fn)))
   (window.scrollTo 0 0) ; scroll to top
   (js/setTimeout ; focus the first editor
     #(when-let [editor (js/document.querySelector "#editor-parent *")]
       (.focus editor))
     1))
 
+
 (defn- on-navigate [event]
-  (load-section (str "#" (.-token event))))
+  (load-section (.-pathname (.-location js/window))))
 
 (defonce _init_navigation-handler
   (browser/add-navigation-handler! on-navigate))
-
-(load-section (.-hash (.-location js/window)))
-

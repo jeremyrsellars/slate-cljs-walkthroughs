@@ -311,7 +311,7 @@ const CodeElement = props => {
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w06"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "next"})
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/05-executing-commands"
@@ -327,7 +327,7 @@ const CodeElement = props => {
                      :class "source-link"}
                     (let [anchor "w04"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "previous"})]}))
 
   (defmethod common/app-component anchor [_] -main)

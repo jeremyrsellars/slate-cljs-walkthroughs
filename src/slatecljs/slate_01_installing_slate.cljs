@@ -120,7 +120,7 @@
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w02"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "next"})
                     {:text "<App>"
                      :url bookmark
@@ -130,7 +130,7 @@
                      :class "slate-tutorial"}
                     (let [anchor ""]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "previous"})]}))
                     
   (defmethod common/app-component anchor [_] -main)

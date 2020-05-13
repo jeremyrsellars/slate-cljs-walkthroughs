@@ -9,4 +9,4 @@ rm -rf target/public/cljs-out/dev/
 powershell -f versionize-html.ps1 target/public/index.html
 ./pages.sh
 cp --recursive target/public/* ../slate-cljs.gh-pages/
-tree -- ../slate-cljs.gh-pages/
+#tree -- ../slate-cljs.gh-pages/

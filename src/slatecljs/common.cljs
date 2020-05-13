@@ -2,23 +2,30 @@
   (:require [clojure.string :as string]
             [react :refer [createElement]]
             [react-dom :refer [render]]
-            ;[ReactDOM]
             [goog.object :as gobj]
             [hljs :refer [highlightBlock]]))
 
 (def ^:dynamic rendered-link
   (fn rendered-link
     [hash]
-    (str "#" hash)))
+    {:hash hash
+     :href
+      (str
+        (if (string/blank? hash)
+          "index"
+          hash)
+        ".html")}))
+
+(def ^:dynamic load-section #(println "not overriden"))
 
 (defmulti app-component
   (fn app-component-dispatch [hash]
-    (or hash ""))
+    (string/replace (or hash "") #"^/" ""))
   :default "")
 
 (defmulti title
   (fn title-dispatch [hash]
-    (or hash "")))
+    (string/replace (or hash "") #"^/" "")))
 
 (defmethod title :default
   [hash]
@@ -34,7 +41,7 @@
 
 (defn demo
   [App {:keys [title about objective description source-comments cljs-source js-source navigation]}]
-  (do
+  (let [load-section load-section]
       (createElement "div" #js {}
         (createElement "h1" #js {} title)
         (when about
@@ -43,7 +50,7 @@
          (createElement "div" #js {:className "objective"}
           objective
           (into-array
-            (for [[idx {:keys [text url class]}] (map-indexed vector navigation)
+            (for [[idx {:keys [text url class rendered-link]}] (map-indexed vector navigation)
                   :when (= class "slate-tutorial")]
               (createElement "span" #js {:key (str idx)}
                #js [(createElement "br" #js {:key "br"})
@@ -89,10 +96,22 @@
         (when navigation
          (createElement "ul" #js {:id "nav", :key "nav"}
           (into-array
-            (for [[idx {:keys [text url rendered-link class] :as x}] (map-indexed vector navigation)]
+            (for [[idx {:keys [text url class rendered-link]}] (map-indexed vector navigation)
+                  :let [{:keys [hash href]} rendered-link]]
               (createElement "li" #js {:className class, :key (str idx)}
                 (createElement "a"
-                  #js {:href (or rendered-link url) :className class
+                  #js {:href (or url href)
+                       :onClick (when rendered-link
+                                 (fn rendered-link-on-click [e]
+                                    (if load-section
+                                      (try
+                                        (load-section hash)
+                                        (.preventDefault e)
+                                        false
+                                        (catch js/Error error
+                                          (.warn js/console (str "Trouble rendering " hash "\r\n" (.toString error) "\r\n" error))))
+                                     (.warn js/console (str ::not-defined! "load-section")))))
+                       :className class
                        :target (when (= class "slate-tutorial") "tutorial")}
                   text)))))))))
 
@@ -104,4 +123,4 @@
     (render
       (demo App data)
       app-host-element)
-    (highlight-source :force))))
+    (js/setTimeout #(do(println "highlighting")(highlight-source :force)) 10))))
