@@ -32,6 +32,4 @@ import javascript from 'highlight.js/lib/languages/javascript'
 import clojure from 'highlight.js/lib/languages/clojure'
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('clojure', clojure)
-globalThis.javascript = javascript
-globalThis.clojure = clojure
 globalThis.hljs = hljs

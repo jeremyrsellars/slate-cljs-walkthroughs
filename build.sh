@@ -1,5 +1,6 @@
-[ ! -f dist/index.bundle.js ]             && npx webpack
-[ src/index.js -nt dist/index.bundle.js ] && npx webpack
+[ ! -f dist/index.bundle.js ]             && npx webpack --mode=production
+[ src/index.js -nt dist/index.bundle.js ] && npx webpack --mode=production
+[ src/index-static.js -nt dist/static.bundle.js ] && npx webpack --mode=production
 rm -rf target/public/
 mkdir target/public
 # Add  -s to start server, then ctrl+c to break.
