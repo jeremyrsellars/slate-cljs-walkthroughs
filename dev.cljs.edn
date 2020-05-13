@@ -1,3 +1,6 @@
 ^{:npm {:bundles {"dist/index.bundle.js" "src/js/index.js"}}
   :css-dirs ["resources/public/css"]}
-{:main slatecljs.slate-walkthroughs}
+{:main slatecljs.slate-walkthroughs
+ :parallel-build true}
+;  :pseudo-names true
+;  :pretty-print true}

@@ -1,4 +1,6 @@
-clj -A:build-static -m figwheel.main -O simple --build-once static
+rm target/node/static/static-main.js
+clj -A:build-static -m cljs.main -O simple -co static.cljs.edn -t nodejs -v -c slatecljs.static-site
+# clj -A:build-static -m figwheel.main -O simple --build-once static
 [ ! -f target/node/static/static-main.js ] && read -p "Build failed.  Press enter to continue a pointless endeavor."
 node -r "node-localstorage/register" target/node/static/static-main.js target/public/
 powershell -f versionize-html.ps1 target/public/index.html

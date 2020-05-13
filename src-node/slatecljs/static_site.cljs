@@ -2,7 +2,7 @@
   (:require [clojure.string :as string]
             cljs.nodejs
             [react :refer [createElement]]
-            ["react-dom/server" :as ReactDOMServer]
+            [ReactDOMServer :refer [renderToStaticMarkup]]
             [slatecljs.common :as common]
             slatecljs.slatecljs-introduction
             slatecljs.slate-01-installing-slate
@@ -53,7 +53,7 @@
 
 (defn- static-render-demo
   [App {:keys [anchor title] :as data}]
-  (ReactDOMServer/renderToStaticMarkup
+  (renderToStaticMarkup
     (shell
       {:title title
        :anchor anchor}

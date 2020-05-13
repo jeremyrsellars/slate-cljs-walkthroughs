@@ -1,7 +1,6 @@
 {:deps {com.bhauman/figwheel-main {:mvn/version "0.2.4"}
         com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
-        cljsjs/slate {:mvn/version "0.33.6-0"}
-        cljsjs/slate-react {:mvn/version "0.12.6-0"}}
+        org.clojure/clojurescript {:mvn/version "1.10.597"}}
  :paths ["src" "target" "resources"]
  ;; setup a helpful alias to start the build
  :aliases {:build-dev {:main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}

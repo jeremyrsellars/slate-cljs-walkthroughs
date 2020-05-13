@@ -4,7 +4,7 @@
             [react-dom :refer [render]]
             ;[ReactDOM]
             [goog.object :as gobj]
-            ["hljs" :refer [highlightBlock]]))
+            [hljs :refer [highlightBlock]]))
 
 (def ^:dynamic rendered-link
   (fn rendered-link
