@@ -2,13 +2,13 @@
 
 The walkthroughs of SlateJS translated to ClojureScript because there are lots of reasons to prefer ClojureScript.
 
-* [Introduction](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/#)
-* [01 Installing Slate](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/#w01)
-* [02 Event handlers](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/#w02)
-* [03 Defining custom elements](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/#w03)
-* [04 Applying custom formatting](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/#w04)
-* [05 Custom commands](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/#w05)
-* [06 Saving to a database](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/#w06)
+* [Introduction](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/)
+* [01 Installing Slate](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/w01.html)
+* [02 Event handlers](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/w02.html)
+* [03 Defining custom elements](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/w03.html)
+* [04 Applying custom formatting](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/w04.html)
+* [05 Custom commands](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/w05.html)
+* [06 Saving to a database](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/w06.html)
 
 Also, you may want to take a look at these files for more on getting Slate, React, NPM, WebPack, and ClojureScript working together.
 
@@ -39,6 +39,7 @@ or
 
 ### Static pages
 
-    clj -A:build-static -m cljs.main -O simple -t nodejs -v -c slatecljs.static-site
+See [./pages.sh](./pages.sh)
 
-    node out/main.js
+    clj -A:build-static -m cljs.main -O simple -co static.cljs.edn -t nodejs -v -c slatecljs.static-site
+    node -r "node-localstorage/register" target/node/static/static-main.js target/public/
