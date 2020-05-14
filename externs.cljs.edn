@@ -1,0 +1,14 @@
+^{:npm {:bundles {"dist/externs.bundle.js" "src/js/index-externs.js"}}
+  :css-dirs ["resources/public/css"]
+  :open-url "http://[[server-hostname]]:[[server-port]]/externs.html"}
+{:main slatecljs.externs.scraper
+ :parallel-build true
+ :target :nodejs
+ :foreign-libs [{:provides ("react" "react-dom" "ReactDOMServer" "slate" "create-editor" "editor" "transforms" "text" "slate-react" "hljs"),
+                 :global-exports {text Text, create-editor createEditor, react React, transforms Transforms, slate slate, slate-react slate-react, react-dom ReactDOM, ReactDOMServer ReactDOMServer, editor Editor, hljs hljs},
+                 :file "dist/externs.bundle.js"}],
+ :npm-deps false
+ :pseudo-names true
+ :pretty-print true
+ :output-to "target/node/externs/externs-main.js",
+ :asset-path "target/node/externs"}

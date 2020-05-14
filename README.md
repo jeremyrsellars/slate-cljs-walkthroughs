@@ -1,5 +1,7 @@
 # Slate text editor walkthroughs in ClojureScript
 
+## Walkthroughs
+
 The walkthroughs of SlateJS translated to ClojureScript because there are lots of reasons to prefer ClojureScript.
 
 * [Introduction](https://jeremyrsellars.github.io/slate-cljs-walkthroughs/)
@@ -37,9 +39,21 @@ or
     npx webpack
 
 
-### Static pages
+## Static pages
 
 See [./pages.sh](./pages.sh)
 
     clj -A:build-static -m cljs.main -O simple -co static.cljs.edn -t nodejs -v -c slatecljs.static-site
     node -r "node-localstorage/register" target/node/static/static-main.js target/public/
+
+
+## Closure Externs
+
+If you prefer Closure to Webpack, you can use these externs or regenerate them with the following script.
+
+* [slate.ext.js](./slate.ext.js)
+* [slate-react.ext.js](./slate-react.ext.js)
+
+### Usage
+
+    ./externs.sh

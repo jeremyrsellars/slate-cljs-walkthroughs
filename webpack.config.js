@@ -6,6 +6,14 @@ const clientConfig = {
   }
 }
 
+const externsConfig = {
+    target: 'node',
+    entry: './src/js/index-externs.js',
+    output: {
+      filename: 'externs.bundle.js'
+    }
+  }
+
 const staticConfig = {
   target: 'node',
   entry: './src/js/index-static.js',
@@ -14,5 +22,4 @@ const staticConfig = {
   }
 }
 
-
-module.exports = [ clientConfig, staticConfig ];
+module.exports = [ clientConfig, externsConfig, staticConfig ];
