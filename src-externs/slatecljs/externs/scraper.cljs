@@ -4,6 +4,7 @@
             [goog.object :as gobj]
             slate
             slate-react
+            slate-html-serializer
             [slatecljs.externs.core :as ext]
             cljs.nodejs
             [cljs-node-io.core :as io :refer [spit]]))
@@ -28,6 +29,7 @@
   (let [out-fn (if out-dir spit-externs print-externs)
         out-dir (or out-dir ".")]
     (out-fn (io/file out-dir "slate.ext.js") "Slate" slate)
+    (out-fn (io/file out-dir "slate-html-serializer.ext.js") "SlateHtmlSerializer" slate-html-serializer)
     (out-fn (io/file out-dir "slate-react.ext.js") "SlateReact" slate-react)))
 
 (set! *main-cli-fn* -main)

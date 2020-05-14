@@ -11,6 +11,9 @@ globalThis.slate = Slate
 import * as SlateReact from 'slate-react'
 globalThis['slate-react'] = SlateReact
 
+import * as SlateHtmlSerializer from 'slate-html-serializer'
+globalThis['slate-html-serializer'] = SlateHtmlSerializer
+
 import hljs from 'highlight.js/lib/core'
 import javascript from 'highlight.js/lib/languages/javascript'
 import clojure from 'highlight.js/lib/languages/clojure'

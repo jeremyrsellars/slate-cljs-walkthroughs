@@ -9,6 +9,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "slate": "^0.58.1",
+    "slate-html-serializer": "^0.8.13",
     "slate-react": "^0.58.1",
     "source-map-support": "^0.5.19",
     "webpack": "^4.42.1",
