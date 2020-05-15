@@ -3,7 +3,7 @@
             [clojure.string :as string]
             [goog.object :as gobj]
             [react :refer [createElement useCallback useEffect useMemo useState]]
-            [slate :refer [createEditor Editor Transforms]]
+            [slate :refer [createEditor Editor Transforms Text]]
             [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
   (:require-macros [slatecljs.github :refer [source-bookmark]]))
