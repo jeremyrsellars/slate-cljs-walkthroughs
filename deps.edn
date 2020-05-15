@@ -4,6 +4,11 @@
  :paths ["src" "target" "resources"]
  ;; setup a helpful alias to start the build
  :aliases {:build-dev {:main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}
+           :cljsjs {:extra-deps {cljsjs/react            {:mvn/version "16.13.1-0"}
+                                 cljsjs/react-dom        {:mvn/version "16.13.1-0"}
+                                 cljsjs/react-dom-server {:mvn/version "16.13.1-0"}
+                                 cljsjs/slate       {:mvn/version "0.58.1-0"}
+                                 cljsjs/slate-react {:mvn/version "0.58.1-0"}}}
            :build-externs {:extra-deps {cljs-node-io {:mvn/version "1.1.2"}}
                            :extra-paths ["src-externs"]}
            :build-static {:extra-deps {cljs-node-io {:mvn/version "1.1.2"}}

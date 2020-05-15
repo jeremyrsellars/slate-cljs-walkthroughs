@@ -4,7 +4,7 @@
 rm -rf target/public/
 mkdir target/public
 # Add  -s to start server, then ctrl+c to break.
-clojure -m figwheel.main -O advanced --build-once dev
+clojure -A:cljsjs -m figwheel.main -O advanced --build-once dev
 cp --recursive resources/public/* target/public/
 rm -rf target/public/cljs-out/dev/
 powershell -f versionize-html.ps1 target/public/index.html
