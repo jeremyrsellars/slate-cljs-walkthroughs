@@ -1,5 +1,6 @@
 .cpcache/*
 .rebel_readline_history
+.cljs_node_repl/*
 dist/*.bundle.js
 node_modules/*
 target/public/*
