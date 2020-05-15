@@ -4,6 +4,7 @@
             [react :refer [createElement]]
             [ReactDOMServer :refer [renderToStaticMarkup]]
             [slatecljs.common :as common]
+            slatecljs.slatecljs-cljsjs-externs
             slatecljs.slatecljs-introduction
             slatecljs.slate-01-installing-slate
             slatecljs.slate-02-event-handlers

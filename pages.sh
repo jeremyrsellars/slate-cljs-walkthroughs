@@ -10,3 +10,4 @@ powershell -f versionize-html.ps1 target/public/w03.html
 powershell -f versionize-html.ps1 target/public/w04.html
 powershell -f versionize-html.ps1 target/public/w05.html
 powershell -f versionize-html.ps1 target/public/w06.html
+powershell -f versionize-html.ps1 target/public/closure_externs.html

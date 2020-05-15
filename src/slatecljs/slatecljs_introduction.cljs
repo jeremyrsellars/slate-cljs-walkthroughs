@@ -33,7 +33,10 @@
              :rendered-link (common/rendered-link anchor)})
           [{:text "01 Installing Slate"
             :url "https://docs.slatejs.org/walkthroughs/01-installing-slate"
-            :class "slate-tutorial"}]])}))
+            :class "slate-tutorial"}
+           (let [anchor "closure_externs"]
+            {:text (common/title anchor)
+             :rendered-link (common/rendered-link anchor)})]])}))
 
   (defmethod common/app-component anchor [_] -main)
   (defmethod common/title anchor [_] title))

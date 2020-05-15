@@ -6,12 +6,18 @@
   </head>
   <body>
     <h1 class="title">Slate with ClojureScript (Advanced compilation)</h1>
-    <div id="app">
-      <h1>Loading...</h1>
-    </div>
-    <script src="cljs-out/externs-main.js"></script>
+    <pre>
+      <code id="app">
+        <h1>Loading...</h1>
+      </code>
+    </pre>
+    <script src="cljs-out/prevext-main.js"></script>
+    <script>
+      document.getElementById('app').innerText = slatecljs.externs.preview._main();
+      hljs.highlightBlock(document.getElementById('app'));
+    </script>
 
-    <!-- <link rel="stylesheet"
-          href="highlightjs/styles/obsidian.css"> -->
+    <link rel="stylesheet"
+          href="highlightjs/styles/obsidian.css">
   </body>
 </html>

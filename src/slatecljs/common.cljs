@@ -40,7 +40,7 @@
       (highlightBlock block))))
 
 (defn demo
-  [App {:keys [title about objective description source-comments cljs-source js-source navigation]}]
+  [App {:keys [title about objective description source-comments cljs-source js-source js-source-title navigation]}]
   (let [load-section load-section]
       (createElement "div" #js {}
         (createElement "h1" #js {} title)
@@ -83,7 +83,7 @@
                 (string/replace-first cljs-source
                   #"\"(?:\\\"|[^\"])*\"\s*" ""))))
           (when js-source
-            (createElement "h3" #js {} "JavaScript (from Slate Tutorial)"))
+            (createElement "h3" #js {} (or js-source-title "JavaScript (from Slate Tutorial)")))
           (when js-source
             (createElement "pre" #js {}
               (createElement "code" #js {:className "language-javascript"

@@ -11,23 +11,23 @@
 (cljs.nodejs/enable-util-print!)
 
 (defn spit-externs
-  [filename js-var-name lib]
+  [filename names lib]
   (spit filename
-    (ext/externs-str js-var-name (ext/describe-externs lib))))
+    (ext/externs-str names (ext/describe-externs lib))))
 
 (defn print-externs
-  [filename js-var-name lib]
+  [filename names lib]
   (println "---------------------------------")
   (println (.toString filename))
   (println "---------------------------------")
-  (println (ext/externs-str js-var-name (ext/describe-externs lib)))
+  (println (ext/externs-str names (ext/describe-externs lib)))
   (println))
 
 (defn ^:export -main
   [& [out-dir]]
   (let [out-fn (if out-dir spit-externs print-externs)
         out-dir (or out-dir ".")]
-    (out-fn (io/file out-dir "slate.ext.js") "Slate" slate)
-    (out-fn (io/file out-dir "slate-react.ext.js") "SlateReact" slate-react)))
+    (out-fn (io/file out-dir "slate.ext.js")       {:js-var-name "Slate"       :ns-name "slate"}       slate)
+    (out-fn (io/file out-dir "slate-react.ext.js") {:js-var-name "SlateReact"  :ns-name "slate-react"} slate-react)))
 
 (set! *main-cli-fn* -main)
