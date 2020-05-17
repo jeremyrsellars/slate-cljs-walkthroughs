@@ -57,3 +57,5 @@ If you prefer Closure to Webpack, you can use these externs or regenerate them w
 ### Usage
 
     ./externs.sh
+
+More about [deploying to cljsjs](CLJSJS.md).
