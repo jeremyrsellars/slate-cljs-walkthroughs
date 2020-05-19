@@ -43,10 +43,10 @@
         #js {:dangerouslySetInnerHTML
               #js {:__html (str "slatecljs.common.highlight_source(\"force\");")}})
 
-      (createElement "div" #js {}
-        "You might also like this "
+      (createElement "div" #js {:id "thanks-footer"}
+        "Thanks for visiting.  You might also like this "
         (createElement "a" #js {:href "https://jeremyrsellars.github.io/no-new-legacy/posts/2018-09-07-generative-testing-introduction/"}
-          "blog about generative testing in Clojure")
+          "series about generative testing in Clojure")
         " also by "
         (createElement "a" #js {:href "https://jeremyrsellars.github.io/"}
           "Jeremy Sellars")

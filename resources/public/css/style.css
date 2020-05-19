@@ -3,6 +3,12 @@ body {
   font-family: sans-serif;
 }
 
+#thanks-footer {
+  margin-top: 1em;
+  padding-top: 0.5em;
+  border-top: 1px solid #282b2e;
+}
+
 #app #editor-parent>* {
   background: #eee;
   border: 1px solid #888;
