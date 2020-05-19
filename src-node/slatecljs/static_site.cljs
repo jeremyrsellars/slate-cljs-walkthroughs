@@ -27,8 +27,12 @@
       (createElement "link" #js {:rel "stylesheet" :href "css/style.css"}))
 
     (createElement "body" #js {}
-      (createElement "h1" #js {:className "title"}
-        "Slate with ClojureScript")
+      (createElement "span" #js {:id "forkongithub"}
+        (createElement "a" #js {:href "https://github.com/jeremyrsellars/slate-cljs-walkthroughs"}
+          "Fork me on GitHub"))
+      (createElement "a" #js {:href "https://jeremyrsellars.github.io/slate-cljs-walkthroughs/"}
+        (createElement "h1" #js {:className "title"}
+          "Slate with ClojureScript"))
       (createElement "div" #js {:id "app"}
         app-content)
 
