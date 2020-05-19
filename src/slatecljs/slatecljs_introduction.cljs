@@ -12,9 +12,9 @@
     (createElement "em" #js {} "AND")
     " the way that renders to HTML."
     (createElement "p" #js {}
-      "These walkthroughs show how ClojureScript can be used to implement the JavaScript code from the official walkthroughs in the Slate documentation."
-      "ClojureScript offers a bunch of ways to make this easier, but I usually chose a very direct translation so they would be easier to follow along with the JS source."
-      "Let's save the power of ClojureScript for another time.")))
+      "These walkthroughs show how ClojureScript can be used to implement the JavaScript code from the official walkthroughs in the Slate documentation. "
+      "ClojureScript offers a bunch of ways to make this easier, but I usually chose a very direct translation so they would be easier to follow along with the JS source. "
+      "Let's save the power of ClojureScript for another time. ")))
 
 (let [anchor ""
       title "Introduction"]
