@@ -2,7 +2,7 @@
   (:require cljs.repl
             [clojure.string :as string]
             [goog.object :as gobj]
-            [react :as React :refer [createElement useCallback useEffect useMemo useState]]
+            [react :refer [createElement useCallback useEffect useMemo useState]]
             [slate :refer [createEditor Editor Node Text Transforms]]
             [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
@@ -132,7 +132,7 @@ const deserialize = string => {
        :navigation [#_
                     (let [anchor "w07"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "next"})
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/06-saving-to-a-database"
@@ -145,7 +145,7 @@ const deserialize = string => {
                      :class "source-link"}
                     (let [anchor "w05"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "previous"})]}))
 
   (defmethod common/app-component anchor [_] -main)

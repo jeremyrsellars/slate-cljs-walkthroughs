@@ -1,7 +1,7 @@
 (ns slatecljs.slate-02-event-handlers
   (:require cljs.repl
             [clojure.string :as string]
-            [react :as React :refer [createElement useEffect useMemo useState]]
+            [react :refer [createElement useEffect useMemo useState]]
             [slate :refer [createEditor]]
             [slate-react :refer [Editable Slate withReact]]
             [slatecljs.common :as common])
@@ -71,7 +71,7 @@
        :js-source (with-out-str (cljs.repl/doc App))
        :navigation [(let [anchor "w03"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "next"})
                     {:text title
                      :url "https://docs.slatejs.org/walkthroughs/02-adding-event-handlers"
@@ -81,7 +81,7 @@
                      :class "source-link"}
                     (let [anchor "w01"]
                       {:text (common/title anchor)
-                       :url (common/rendered-link anchor)
+                       :rendered-link (common/rendered-link anchor)
                        :class "previous"})]}))
 
   (defmethod common/app-component anchor [_] -main)

@@ -1,21 +1,31 @@
 (ns slatecljs.common
   (:require [clojure.string :as string]
             [react :refer [createElement]]
-            [goog.object :as gobj]))
+            [react-dom :refer [render]]
+            [goog.object :as gobj]
+            [hljs :refer [highlightBlock]]))
 
 (def ^:dynamic rendered-link
   (fn rendered-link
     [hash]
-    (str "#" hash)))
+    {:hash hash
+     :href
+      (str
+        (if (string/blank? hash)
+          "index"
+          hash)
+        ".html")}))
+
+(def ^:dynamic load-section #(println "not overriden"))
 
 (defmulti app-component
   (fn app-component-dispatch [hash]
-    (or hash ""))
+    (string/replace (or hash "") #"^/" ""))
   :default "")
 
 (defmulti title
   (fn title-dispatch [hash]
-    (or hash "")))
+    (string/replace (or hash "") #"^/" "")))
 
 (defmethod title :default
   [hash]
@@ -23,17 +33,15 @@
 
 (defn ^:export highlight-source
   [force?]
-  (if-let [hljs (gobj/get js/window "hljs")]
-    (let [selector (if force
-                        "#source pre code"
-                        "#source pre code:not(.hljs)")]
-      (doseq [block (array-seq (.querySelectorAll js/document selector))]
-        (.highlightBlock hljs block)))
-    (js/setTimeout highlight-source 1000)))
+  (let [selector (if force
+                      "#source pre code"
+                      "#source pre code:not(.hljs)")]
+    (doseq [block (array-seq (.querySelectorAll js/document selector))]
+      (highlightBlock block))))
 
 (defn demo
-  [App {:keys [title about objective description source-comments cljs-source js-source navigation]}]
-  (do
+  [App {:keys [title about objective description source-comments cljs-source js-source js-source-title navigation]}]
+  (let [load-section load-section]
       (createElement "div" #js {}
         (createElement "h1" #js {} title)
         (when about
@@ -42,7 +50,7 @@
          (createElement "div" #js {:className "objective"}
           objective
           (into-array
-            (for [[idx {:keys [text url class]}] (map-indexed vector navigation)
+            (for [[idx {:keys [text url class rendered-link]}] (map-indexed vector navigation)
                   :when (= class "slate-tutorial")]
               (createElement "span" #js {:key (str idx)}
                #js [(createElement "br" #js {:key "br"})
@@ -75,7 +83,7 @@
                 (string/replace-first cljs-source
                   #"\"(?:\\\"|[^\"])*\"\s*" ""))))
           (when js-source
-            (createElement "h3" #js {} "JavaScript (from Slate Tutorial)"))
+            (createElement "h3" #js {} (or js-source-title "JavaScript (from Slate Tutorial)")))
           (when js-source
             (createElement "pre" #js {}
               (createElement "code" #js {:className "language-javascript"
@@ -88,10 +96,22 @@
         (when navigation
          (createElement "ul" #js {:id "nav", :key "nav"}
           (into-array
-            (for [[idx {:keys [text url class]}] (map-indexed vector navigation)]
+            (for [[idx {:keys [text url class rendered-link]}] (map-indexed vector navigation)
+                  :let [{:keys [hash href]} rendered-link]]
               (createElement "li" #js {:className class, :key (str idx)}
                 (createElement "a"
-                  #js {:href url, :className class
+                  #js {:href (or url href)
+                       :onClick (when rendered-link
+                                 (fn rendered-link-on-click [e]
+                                    (if load-section
+                                      (try
+                                        (load-section hash)
+                                        (.preventDefault e)
+                                        false
+                                        (catch js/Error error
+                                          (.warn js/console (str "Trouble rendering " hash "\r\n" (.toString error) "\r\n" error))))
+                                     (.warn js/console (str ::not-defined! "load-section")))))
+                       :className class
                        :target (when (= class "slate-tutorial") "tutorial")}
                   text)))))))))
 
@@ -100,7 +120,7 @@
   [App {:keys [title] :as data}]
   (let [app-host-element (js/document.getElementById "app")]
     (gobj/set js/document "title" (str title " - Slate with ClojureScript"))
-    (js/ReactDOM.render
+    (render
       (demo App data)
       app-host-element)
-    (highlight-source :force))))
+    (js/setTimeout #(do(println "highlighting")(highlight-source :force)) 10))))

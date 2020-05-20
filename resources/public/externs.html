@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Slate Closure Externs</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <h1 class="title">Slate with ClojureScript (Advanced compilation)</h1>
+    <pre>
+      <code id="app">
+        <h1>Loading...</h1>
+      </code>
+    </pre>
+    <script src="cljs-out/prevext-main.js"></script>
+    <script>
+      document.getElementById('app').innerText = slatecljs.externs.preview._main();
+      hljs.highlightBlock(document.getElementById('app'));
+    </script>
+
+    <link rel="stylesheet"
+          href="highlightjs/styles/obsidian.css">
+  </body>
+</html>

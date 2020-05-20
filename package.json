@@ -4,11 +4,12 @@
   "description": "clojure -m figwheel.main -b dev -r",
   "main": "webpack.config.js",
   "dependencies": {
+    "highlight.js": "^10.0.2",
     "node-localstorage": "^2.1.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "slate": "^0.57.1",
-    "slate-react": "^0.57.1",
+    "slate": "^0.58.1",
+    "slate-react": "^0.58.1",
     "source-map-support": "^0.5.19",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"

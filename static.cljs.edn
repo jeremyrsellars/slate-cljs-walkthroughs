@@ -1,0 +1,13 @@
+^{:npm {:bundles {"dist/static.bundle.js" "src/js/index-static.js"}}
+  :css-dirs ["resources/public/css"]}
+{:main slatecljs.static-site
+ :target :nodejs
+ :parallel-build true
+ :foreign-libs [{:provides ("react" "react-dom" "ReactDOMServer" "slate" "create-editor" "editor" "transforms" "text" "slate-react" "hljs"),
+                 :global-exports {text Text, create-editor createEditor, react React, transforms Transforms, slate slate, slate-react slate-react, react-dom ReactDOM, ReactDOMServer ReactDOMServer, editor Editor, hljs hljs},
+                 :file "dist/static.bundle.js"}],
+ :npm-deps false
+ :pseudo-names true
+ :pretty-print true
+ :output-to "target/node/static/static-main.js",
+ :asset-path "target/node/static"}
