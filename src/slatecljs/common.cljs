@@ -40,7 +40,8 @@
       (highlightBlock block))))
 
 (defn demo
-  [App {:keys [title about objective description source-comments cljs-source js-source js-source-title navigation]}]
+  [App {:keys [title about objective description source-comments cljs-source cljs-source-comment? js-source js-source-title navigation]
+        :or {cljs-source-comment? false}}]
   (let [load-section load-section]
       (createElement "div" #js {}
         (createElement "h1" #js {} title)
@@ -80,8 +81,10 @@
             (createElement "pre" #js {}
               (createElement "code" #js {:className "language-clojure"
                                          :key (str "cljs:" title)}
+               (if cljs-source-comment?
+                cljs-source
                 (string/replace-first cljs-source
-                  #"\"(?:\\\"|[^\"])*\"\s*" ""))))
+                  #"\"(?:\\\"|[^\"])*\"\s*(?=[\[(])" "")))))
           (when js-source
             (createElement "h3" #js {} (or js-source-title "JavaScript (from Slate Tutorial)")))
           (when js-source
