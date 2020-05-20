@@ -28,7 +28,8 @@
        :objective "Feel free to read through the code or clone this repo and edit it to improve your understanding."
        :navigation
         (reduce into []
-         [(for [anchor ["w01" "w02" "w03" "w04" "w05" "w06"]]
+         [(for [anchor ["w01" "w02" "w03" "w04" "w05" "w06"
+                        "c01"]]
             {:text (common/title anchor)
              :rendered-link (common/rendered-link anchor)})
           [{:text "01 Installing Slate"

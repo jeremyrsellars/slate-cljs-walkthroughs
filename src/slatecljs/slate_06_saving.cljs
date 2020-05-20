@@ -56,7 +56,7 @@ const deserialize = string => {
             nil
             {:source-comments
               (createElement "h2" #js {}
-                "Custom serializatoin as a single string")
+                "Custom serialization as a single string")
              :cljs-source (with-out-str (cljs.repl/source serialize))
              :js-source (with-out-str (cljs.repl/doc serialize))})
           (common/demo
@@ -129,8 +129,7 @@ const deserialize = string => {
        :source-comments (source-comments)
        :cljs-source (with-out-str (cljs.repl/source App))
        :js-source (with-out-str (cljs.repl/doc App))
-       :navigation [#_
-                    (let [anchor "w07"]
+       :navigation [(let [anchor "c01"]
                       {:text (common/title anchor)
                        :rendered-link (common/rendered-link anchor)
                        :class "next"})
