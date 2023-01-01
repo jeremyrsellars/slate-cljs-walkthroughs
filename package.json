@@ -11,8 +11,8 @@
     "slate": "^0.58.1",
     "slate-react": "^0.58.1",
     "source-map-support": "^0.5.19",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "devDependencies": {},
   "scripts": {
